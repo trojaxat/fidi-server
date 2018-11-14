@@ -11,9 +11,11 @@ const app = express();
 const knex = require('knex');
 
 const db = knex({
-  client: 'mysql',
+    client: 'mysql',
+    version: '6.4',
   connection: {
     host : '127.0.0.1',
+    port: '3306',
     user : 'root',
     password : '',
     database : 'fidi'
@@ -26,7 +28,7 @@ const database = {
     users: [
         {
             id: 123,
-            name: 'John',
+            username: 'John',
             email: 'john@gmail.com',
             password: 'cookies',
             entries: 0,
@@ -34,7 +36,7 @@ const database = {
         },
         {
             id: 124,
-            name: 'Sally',
+            username: 'Sally',
             email: 'sally@gmail.com',
             password: 'cake',
             entries: 0,
@@ -61,7 +63,8 @@ app.post('/signin', (req, res) => {
             
 app.post('/register', (req, res) => {
         //password needs to be hashed
-        const { email, name, password } = req.body;
+        const { email, username, password } = req.body;
+        console.log('const', req.body);
         database.users.push ({
             id: (database.users[database.users.length-1].id) + 1,
             username: req.body.username,
@@ -70,6 +73,12 @@ app.post('/register', (req, res) => {
             entries: 0,
             joined: new Date()
         })
+        db('users').insert({
+            email : email,
+            username: username,
+            password: password,
+            date: new Date()
+        }).then(console.log)
         res.json(database.users[database.users.length-1]);
 })
 
