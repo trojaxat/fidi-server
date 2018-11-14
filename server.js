@@ -1,5 +1,10 @@
+// prevents issues with cross origin reading
 const cors = require('cors'); 
+// connects to database like node.js
+const knex = require('knex'); 
+// web application framework for node.js
 const express = require('express');
+// middleware to extract the body of incoming request
 const bodyParser = require('body-parser');
 // express initiates express.js framework for node.js
 const app = express();
