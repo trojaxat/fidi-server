@@ -1,7 +1,5 @@
 // prevents issues with cross origin reading
 const cors = require('cors'); 
-// connects to database like node.js
-const knex = require('knex'); 
 // web application framework for node.js
 const express = require('express');
 // middleware to extract the body of incoming request
@@ -9,6 +7,21 @@ const bodyParser = require('body-parser');
 // express initiates express.js framework for node.js
 const app = express();
 //body-parser extracts the entire body portion of an incoming request stream and exposes it on req.body as something easier to interface with
+// connects to database like node.js
+const knex = require('knex');
+
+const db = knex({
+  client: 'mysql',
+  connection: {
+    host : '127.0.0.1',
+    user : 'root',
+    password : '',
+    database : 'fidi'
+  }
+});
+
+db.select('*').from('users');
+
 const database = {
     users: [
         {
