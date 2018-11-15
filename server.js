@@ -2,11 +2,12 @@
 const cors = require('cors'); 
 // web application framework for node.js
 const express = require('express');
-// middleware to extract the body of incoming request
+//body-parser extracts the entire body portion of an incoming request stream and exposes it on req.body as something easier to interface with
 const bodyParser = require('body-parser');
+// encryption to hash passwords
+const bcrypt = require('bcrypt-nodejs');
 // express initiates express.js framework for node.js
 const app = express();
-//body-parser extracts the entire body portion of an incoming request stream and exposes it on req.body as something easier to interface with
 // connects to database like node.js
 const knex = require('knex');
 
@@ -15,34 +16,14 @@ const db = knex({
     version: '6.4',
   connection: {
     host : '127.0.0.1',
-    port: '3306',
     user : 'root',
     password : '',
     database : 'fidi'
   }
 });
 
-db.select('*').from('users');
-
 const database = {
-    users: [
-        {
-            id: 123,
-            username: 'John',
-            email: 'john@gmail.com',
-            password: 'cookies',
-            entries: 0,
-            joined: new Date()
-        },
-        {
-            id: 124,
-            username: 'Sally',
-            email: 'sally@gmail.com',
-            password: 'cake',
-            entries: 0,
-            joined: new Date()
-        },
-    ]
+    users: []
 }
 
 app.use(bodyParser.json());
@@ -62,56 +43,56 @@ app.post('/signin', (req, res) => {
 })
             
 app.post('/register', (req, res) => {
-        //password needs to be hashed
-        const { email, username, password } = req.body;
-        console.log('const', req.body);
+    const { email, username, password } = req.body;
+    const hash = bcrypt.hashSync(password);
+    const myPlaintextPassword = req.body.password;
+    const saltRounds = 10;
+    
+
         database.users.push ({
-            id: (database.users[database.users.length-1].id) + 1,
             username: req.body.username,
             email: req.body.email,
-            password: req.body.password,
+            password: hash,
             entries: 0,
-            joined: new Date()
+            date: new Date()
         })
-        db('users').insert({
+        
+        db('users')
+            .insert({
             email : email,
             username: username,
-            password: password,
+            password: hash,
             date: new Date()
-        }).then(console.log)
-        res.json(database.users[database.users.length-1]);
+        }).catch(err => res.status(400).json('Unable to register'))
+        
+        db('users').where('username', username).then(response => {
+            res.json(response)
+        })
 })
 
-app.get('/profile/:id', (req, res) => {
-    const { id } = req.params;
-    let found = false;
-    console.log('id', id);
-    database.users.forEach(user => {
-        if (user.id === id) {
-            found = true;
-            return res.json(user);
-        }
+app.get('/profile/:username', (req, res) => {
+    const { username } = req.params;
+    db.select('*').from('users').where({username})
+        .then(response => {
+         res.send(response[0])
     })
-    if (!found) {
-        res.status(404).json('User not found');
-    }
 })
 
 app.post('/image', (req, res) => {
-    const { id } = req.body;
-    let found = false;
-    console.log('id', id);
-    database.users.forEach(user => {
-        if (user.id === id) {
-            found = true;
-            // change to update user entries to be photo urls
-            user.entries++
-            return res.json(user.entries);
-        }
-    })
-    if (!found) {
-        res.status(404).json('User not found');
-    }
+    const { email } = req.body;
+    db('users')
+        .where('email', '=', email)
+        .increment('entries', 1)
+        .returning('entries')
+        .then(entries => {
+            console.log(entries)
+        })
+    db('users')
+        .where('email', '=', email)
+        .select('entries')
+        .then(response => {
+            res.json(response[0].entries)
+        })
 })
 
 app.listen(3000, ()=> {
