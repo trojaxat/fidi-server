@@ -25,13 +25,13 @@ const db = knex({
 app.use(bodyParser.json());
 app.use(cors())
 
-
-app.get('/', (req, res) => {
-    db.select('*').from('users')
-        .then(response => {
-         res.send(response[0])
-    })
-})
+    //
+    //app.get('/', (req, res) => {
+    //    db.select('*').from('users')
+    //        .then(response => {
+    //         res.send(response[0])
+    //    })
+    //})
 
 app.post('/signin', (req, res) => {
     db.select('email', 'hash').from('login')
@@ -94,20 +94,30 @@ app.get('/profile/:username', (req, res) => {
 })
 
 app.post('/image', (req, res) => {
+    // need to change this for security reasons
     const { email } = req.body;
-    db('users')
+    db('photos')  
         .where('email', '=', email)
-        .increment('entries', 1)
-        .returning('entries')
-        .then(entries => {
-            console.log(entries)
-        })
-    db('users')
+        .select('link')
+        .limit(10)
+        .bind(console)
+        .then(links => {
+        res.json(links)
+        }).catch(err => res.status(400).json('Photos not received from database'))
+})
+
+app.post('/addImage', (req, res) => {
+    const { email, link, place } = req.body;
+    db('photos')  
         .where('email', '=', email)
-        .select('entries')
-        .then(response => {
-            res.json(response[0].entries)
-        })
+        .insert({link: link, email: email, place: place})
+        .then(response => response)
+    db('photos')      
+        .select('link')
+        .where('place', '=', place)
+        .then(link => {
+        res.json(link[0])
+        }).catch(err => res.status(400).json('Photos not added'))
 })
 
 app.listen(3000, ()=> {
