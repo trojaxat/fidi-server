@@ -22,24 +22,32 @@ const db = knex({
   }
 });
 
-const database = {
-    users: []
-}
-
 app.use(bodyParser.json());
 app.use(cors())
 
 
 app.get('/', (req, res) => {
-        res.send(database.users);
+    db.select('*').from('users')
+        .then(response => {
+         res.send(response[0])
+    })
 })
 
 app.post('/signin', (req, res) => {
-        if (req.body.email === database.users[0].email && req.body.password === database.users[0].password) {
-            res.json(database.users[0]);
+    db.select('email', 'hash').from('login')
+        .where('email', '=', req.body.email)
+        .then(data => {
+        const isCorrect = bcrypt.compareSync(req.body.password, data[0].hash);
+        if (isCorrect) {
+            return db.select('*').from('users')
+            .where('email', '=', req.body.email)
+            .then(user => {
+                 res.send(user[0])
+            }).catch(err => res.status(400, res.json('No chance laddie')))
         } else {
-            res.status(400, res.json('No chance laddie'));
+            res.status(400, res.json('Nae chance password'))
         }
+    }).catch(err => res.status(400, res.json('Nae chance user')))
 })
             
 app.post('/register', (req, res) => {
@@ -47,27 +55,34 @@ app.post('/register', (req, res) => {
     const hash = bcrypt.hashSync(password);
     const myPlaintextPassword = req.body.password;
     const saltRounds = 10;
-    
-
-        database.users.push ({
-            username: req.body.username,
-            email: req.body.email,
-            password: hash,
-            entries: 0,
-            date: new Date()
-        })
+    let id = 0;
         
+        db.select('*').from('users').then(response => {
+            id = response.length  
+        }).catch(err => res.status(400).json('Unable to connect to database'))
+    
         db('users')
             .insert({
+            entries: 0,
             email : email,
             username: username,
-            password: hash,
             date: new Date()
-        }).catch(err => res.status(400).json('Unable to register'))
+        }).catch(err => res.status(400).json('Unable to register user'))
         
-        db('users').where('username', username).then(response => {
-            res.json(response)
-        })
+        const login = () => {
+            console.log('id', id);
+            db('login')
+            .insert({
+                hash: hash,
+                email: email,
+                id: id
+            }).catch(err => res.status(400).json('Unable to register login'))
+
+            db('users').where('username', username).then(response => {
+                res.send(response[0])
+            })
+        }
+        return setTimeout(login, 1000);
 })
 
 app.get('/profile/:username', (req, res) => {
