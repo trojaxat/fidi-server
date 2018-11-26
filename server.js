@@ -67,10 +67,24 @@ app.post('/register', (req, res) => {
     const hash = bcrypt.hashSync(password);
     const myPlaintextPassword = req.body.password;
     const saltRounds = 10;
-    let id = 0;
+    let emailTaken = false;
+    
+    db.select('*').from('users').where({username})
+        .then(response => {
+         console.log('response', res.send(response[0]));
+         res.send(response[0])
+         if (response[0].id) {
+            emailtaken = true;
+            console.log('emailtaken', emailtaken);
+            return emailTaken
+         }
+    })
+    
     if (!email || !username || !password) {
         return  res.status(400).json('One of the fields is empty')
-    }   
+    } else if (!userTaken) {
+        return  res.status(400).json('Email already used')
+    } else {
         const register = () => {
             db('users')
                 .insert({
@@ -86,6 +100,7 @@ app.post('/register', (req, res) => {
             })
         }
         return setTimeout(register, 1000);
+    }
 })
 
 app.get('/profile/:username', (req, res) => {
