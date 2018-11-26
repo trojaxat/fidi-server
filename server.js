@@ -67,25 +67,19 @@ app.post('/register', (req, res) => {
     const hash = bcrypt.hashSync(password);
     const myPlaintextPassword = req.body.password;
     const saltRounds = 10;
-    let emailTaken = false;
+    let emailTaken = true;
     
     db.select('*').from('users').where({username})
         .then(response => {
          console.log('response', res.send(response[0]));
          res.send(response[0])
          if (response[0].id) {
-            emailtaken = true;
-            console.log('emailtaken', emailtaken);
+            emailtaken = false
             return emailTaken
          }
     })
     
-    if (!email || !username || !password) {
-        return  res.status(400).json('One of the fields is empty')
-    } else if (emailTaken) {
-        return  res.status(400).json('Email already used')
-    } else {
-        const register = () => {
+    const register = () => {
             db('users')
                 .insert({
                     username: username,
@@ -95,10 +89,16 @@ app.post('/register', (req, res) => {
                     date: new Date()
             }).catch(err => res.status(400).json('Unable to register'))
             
-            db('users').where('username', username).then(response => {
+            db('users').where('email', email).then(response => {
                 res.send(response[0])
             })
         }
+    
+    if (!email || !username || !password) {
+        return  res.status(400).json('One of the fields is empty')
+    } else if (!emailTaken) {
+        return  res.status(400).json('Email already used')
+    } else {
         return setTimeout(register, 1000);
     }
 })
