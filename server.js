@@ -45,7 +45,7 @@ app.post('/signin', (req, res) => {
     if (!email || !password) {
         return  res.status(400).json('One of the fields is empty')
     }
-    db.select('email', 'hash').from('login')
+    db.select('email', 'hash').from('users')
         .where('email', '=', req.body.email)
         .then(data => {
         const isCorrect = bcrypt.compareSync(req.body.password, data[0].hash);
@@ -126,6 +126,8 @@ app.post('/addImage', (req, res) => {
 app.listen(process.env.PORT || 3000, ()=> {
     console.log(`Server is listening to port ${process.env.PORT}`);
 })
+
+// local host settings
 //app.listen(3000, ()=> {
 //    console.log(`Server is listening to port 3000`);
 //})
