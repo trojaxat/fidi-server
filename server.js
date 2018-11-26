@@ -69,33 +69,22 @@ app.post('/register', (req, res) => {
     let id = 0;
     if (!email || !name || !password) {
         return  res.status(400).json('One of the fields is empty')
-    }
-        db.select('*').from('users').then(response => {
-            id = response.length  
-        }).catch(err => res.status(400).json('Unable to connect to database'))
-    
-        db('users')
-            .insert({
-            entries: 0,
-            email : email,
-            username: username,
-            date: new Date()
-        }).catch(err => res.status(400).json('Unable to register user'))
-        
-        const login = () => {
-            console.log('id', id);
-            db('login')
-            .insert({
-                hash: hash,
-                email: email,
-                id: id
-            }).catch(err => res.status(400).json('Unable to register login'))
-
+    }   
+        const register = () => {
+            db('users')
+                .insert({
+                    entries: 0,
+                    hash: hash,
+                    email: email,
+                    username: username,
+                    date: new Date()
+            }).catch(err => res.status(400).json('Unable to register'))
+            
             db('users').where('username', username).then(response => {
                 res.send(response[0])
             })
         }
-        return setTimeout(login, 1000);
+        return setTimeout(register, 1000);
 })
 
 app.get('/profile/:username', (req, res) => {
