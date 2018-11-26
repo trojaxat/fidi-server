@@ -63,20 +63,21 @@ app.post('/signin', (req, res) => {
             
 app.post('/register', (req, res) => {
     const { email, username, password } = req.body;
+    console.log('req.body', req.body);
     const hash = bcrypt.hashSync(password);
     const myPlaintextPassword = req.body.password;
     const saltRounds = 10;
     let id = 0;
-    if (!email || !name || !password) {
+    if (!email || !username || !password) {
         return  res.status(400).json('One of the fields is empty')
     }   
         const register = () => {
             db('users')
                 .insert({
-                    entries: 0,
-                    hash: hash,
-                    email: email,
                     username: username,
+                    email: email,
+                    hash: hash,
+                    entries: 0,
                     date: new Date()
             }).catch(err => res.status(400).json('Unable to register'))
             
@@ -125,3 +126,6 @@ app.post('/addImage', (req, res) => {
 app.listen(process.env.PORT || 3000, ()=> {
     console.log(`Server is listening to port ${process.env.PORT}`);
 })
+//app.listen(3000, ()=> {
+//    console.log(`Server is listening to port 3000`);
+//})
