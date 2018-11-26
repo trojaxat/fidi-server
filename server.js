@@ -125,7 +125,7 @@ app.post('/addImage', (req, res) => {
         res.json(link[0])
         }).catch(err => res.status(400).json('Photos not added'))
 })
-const PORT = process.env.PORT
-app.listen(PORT, ()=> {
-    console.log(`Server is listening to port ${PORT}`);
+
+app.listen(process.env.PORT || 3000, ()=> {
+    console.log(`Server is listening to port ${process.env.PORT}`);
 })
