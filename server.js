@@ -34,6 +34,10 @@ app.use(cors())
     //})
 
 app.post('/signin', (req, res) => {
+    const { email, password } = req.body;
+    if (!email || !password) {
+        return  res.status(400).json('One of the fields is empty')
+    }
     db.select('email', 'hash').from('login')
         .where('email', '=', req.body.email)
         .then(data => {
@@ -56,7 +60,9 @@ app.post('/register', (req, res) => {
     const myPlaintextPassword = req.body.password;
     const saltRounds = 10;
     let id = 0;
-        
+    if (!email || !name || !password) {
+        return  res.status(400).json('One of the fields is empty')
+    }
         db.select('*').from('users').then(response => {
             id = response.length  
         }).catch(err => res.status(400).json('Unable to connect to database'))
@@ -119,7 +125,7 @@ app.post('/addImage', (req, res) => {
         res.json(link[0])
         }).catch(err => res.status(400).json('Photos not added'))
 })
-
-app.listen(3000, ()=> {
-    console.log("Server Running");
+const PORT = process.env.PORT
+app.listen(PORT, ()=> {
+    console.log(`Server is listening to port ${PORT}`);
 })
