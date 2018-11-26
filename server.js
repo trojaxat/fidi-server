@@ -25,13 +25,10 @@ const db = knex({
 app.use(bodyParser.json());
 app.use(cors())
 
-    //
-    //app.get('/', (req, res) => {
-    //    db.select('*').from('users')
-    //        .then(response => {
-    //         res.send(response[0])
-    //    })
-    //})
+    
+app.get('/', (req, res) => {
+    return res.send('Heroku working')
+    })
 
 app.post('/signin', (req, res) => {
     const { email, password } = req.body;
