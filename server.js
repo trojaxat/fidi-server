@@ -10,15 +10,25 @@ const bcrypt = require('bcrypt-nodejs');
 const app = express();
 // connects to database like node.js
 const knex = require('knex');
+// package.json file can change node server to nodemon server to test server on local host againa
+
+// old mysql database from local host
+//const db = knex({
+//    client: 'mysql',
+//    version: '6.4',
+//  connection: {
+//    host : '127.0.0.1',
+//    user : 'root',
+//    password : '',
+//    database : 'fidi'
+//  }
+//});
 
 const db = knex({
-    client: 'mysql',
-    version: '6.4',
+    client: 'pg',
   connection: {
-    host : '127.0.0.1',
-    user : 'root',
-    password : '',
-    database : 'fidi'
+    connectionString : process.env.DATABASE_URL,
+    ssl : true
   }
 });
 
