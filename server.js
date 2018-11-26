@@ -82,7 +82,7 @@ app.post('/register', (req, res) => {
     
     if (!email || !username || !password) {
         return  res.status(400).json('One of the fields is empty')
-    } else if (!emailTaken) {
+    } else if (emailTaken) {
         return  res.status(400).json('Email already used')
     } else {
         const register = () => {
