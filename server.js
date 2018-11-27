@@ -12,6 +12,23 @@ const app = express();
 const knex = require('knex');
 // package.json file can change node server to nodemon server to test server on local host againa
 
+
+//Controllers
+const register = require('./controller/register');
+const signin = require('./controller/signin');
+const userGet = require('./controller/userGet');
+const loadUserIcons = require('./controller/loadUserIcons');
+
+
+
+const db = knex({
+    client: 'pg',
+  connection: {
+    connectionString : process.env.DATABASE_URL,
+    ssl : true
+  }
+});
+
 // old mysql database from local host
 //const db = knex({
 //    client: 'mysql',
@@ -23,122 +40,22 @@ const knex = require('knex');
 //    database : 'fidi'
 //  }
 //});
-
-const db = knex({
-    client: 'pg',
-  connection: {
-    connectionString : process.env.DATABASE_URL,
-    ssl : true
-  }
-});
-
 app.use(bodyParser.json());
 app.use(cors())
+ 
+app.get('/', (req, res) => { return res.send('Heroku working') })
 
+app.post('/signin', (req, res) => { signin.handleSignin(req, res, db, bcrypt) })
+
+app.post('/register', (req,res) => { register.handleRegister(req, res, db, bcrypt) })
+
+app.get('/profile/:username', (req,res) => { userGet.handleUserget(req, res, db) })
     
-app.get('/', (req, res) => {
-    return res.send('Heroku working')
-    })
+app.post('/image', (req, res) => { loadUserIcons.handleLoadUserIcons(req, res, db) })
 
-app.post('/signin', (req, res) => {
-    const { email, password } = req.body;
-    if (!email || !password) {
-        return  res.status(400).json('One of the fields is empty')
-    }
-    db.select('email', 'hash').from('users')
-        .where('email', '=', req.body.email)
-        .then(data => {
-        const isCorrect = bcrypt.compareSync(req.body.password, data[0].hash);
-        if (isCorrect) {
-            return db.select('*').from('users')
-            .where('email', '=', req.body.email)
-            .then(user => {
-                 res.send(user[0])
-            }).catch(err => res.status(400, res.json('No chance laddie')))
-        } else {
-            res.status(400, res.json('Nae chance password'))
-        }
-    }).catch(err => res.status(400, res.json('Nae chance user')))
-})
-            
-app.post('/register', (req, res) => {
-    const { email, username, password } = req.body;
-    console.log('req.body', req.body);
-    const hash = bcrypt.hashSync(password);
-    const myPlaintextPassword = req.body.password;
-    const saltRounds = 10;
-    let emailTaken = true;
+app.post('/addImage', (req, res) => { addImage.handleAddImage(req, res, db) })
     
-    db.select('*').from('users').where({username})
-        .then(response => {
-         console.log('response', res.send(response[0]));
-         res.send(response[0])
-         if (response[0].id) {
-            emailtaken = false
-            return emailTaken
-         }
-    })
-    
-    const register = () => {
-            db('users')
-                .insert({
-                    username: username,
-                    email: email,
-                    hash: hash,
-                    entries: 0,
-                    date: new Date()
-            }).catch(err => res.status(400).json('Unable to register'))
-            
-            db('users').where('email', email).then(response => {
-                res.send(response[0])
-            })
-        }
-    
-    if (!email || !username || !password) {
-        return  res.status(400).json('One of the fields is empty')
-    } else if (!emailTaken) {
-        return  res.status(400).json('Email already used')
-    } else {
-        return setTimeout(register, 1000);
-    }
-})
-
-app.get('/profile/:username', (req, res) => {
-    const { username } = req.params;
-    db.select('*').from('users').where({username})
-        .then(response => {
-         res.send(response[0])
-    })
-})
-
-app.post('/image', (req, res) => {
-    // need to change this for security reasons
-    const { email } = req.body;
-    db('photos')  
-        .where('email', '=', email)
-        .select('link')
-        .limit(10)
-        .bind(console)
-        .then(links => {
-        res.json(links)
-        }).catch(err => res.status(400).json('Photos not received from database'))
-})
-
-app.post('/addImage', (req, res) => {
-    const { email, link, place } = req.body;
-    db('photos')  
-        .where('email', '=', email)
-        .insert({link: link, email: email, place: place})
-        .then(response => response)
-    db('photos')      
-        .select('link')
-        .where('place', '=', place)
-        .then(link => {
-        res.json(link[0])
-        }).catch(err => res.status(400).json('Photos not added'))
-})
-
-app.listen(process.env.PORT || 3000, ()=> {
+app.listen(process.env.PORT || 3000, ()=> { 
     console.log(`Server is listening to port ${process.env.PORT}`);
 })
 
