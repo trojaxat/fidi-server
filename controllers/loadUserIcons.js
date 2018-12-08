@@ -14,5 +14,5 @@ const handleLoadUserIcons = (req, res, db) => {
 }
 
 module.exports = {
-    handleLoadUserIcons: handleLoadUserIcons
+    handleLoadUserIcons
     }

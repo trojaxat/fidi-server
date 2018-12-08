@@ -7,5 +7,5 @@ const handleUserGet = (req, res) => {
 }
     
 module.exports = {
-    handleUserGet: handleUserGet
+    handleUserGet
     }
