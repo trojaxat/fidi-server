@@ -29,7 +29,7 @@ const db = knex({
   }
 });
 
-// old mysql database from local host
+//old mysql database from local host
 //const db = knex({
 //    client: 'mysql',
 //    version: '6.4',
@@ -48,9 +48,9 @@ app.get('/', (req, res) => { return res.send('Heroku working') })
 
 app.post('/signin', (req, res) => { signin.handleSignIn(req, res, db, bcrypt) })
 
-app.post('/register', (req,res) => { register.handleRegister(req, res, db, bcrypt) })
+app.post('/register', (req, res) => { register.handleRegister(req, res, db, bcrypt) })
 
-app.get('/profile/:username', (req,res) => { userGet.handleUserget(req, res, db) })
+app.get('/profile/:username', (req, res) => { userGet.handleUserget(req, res, db) })
     
 app.post('/loadUserIcons', (req, res) => { loadUserIcons.handleLoadUserIcons(req, res, db) })
 

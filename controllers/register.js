@@ -1,18 +1,17 @@
-const handleRegister = (db, bcrypt, req, res) => {
+const handleRegister = (req, res, db, bcrypt) => {
     const { email, username, password } = req.body;
     const hash = bcrypt.hashSync(password);
     const myPlaintextPassword = req.body.password;
     const saltRounds = 10;
-    let emailTaken = true;
+    let emailTaken;
     
-    db.select('*').from('users').where({username})
+    db.select('email')
+        .from('users')
+        .where('email', '=', email)
         .then(response => {
-         res.send(response[0])
-         if (response[0].email) {
-            emailTaken = false
+            emailTaken = response[0].email
             return emailTaken
-         }
-    })
+         })
     
     const register = () => {
             db('users')
@@ -24,15 +23,18 @@ const handleRegister = (db, bcrypt, req, res) => {
                     date: new Date()
             }).catch(err => res.status(400).json('Unable to register'))
             
-            db('users').where('email', email).then(response => {
-                res.send(response[0])
+            db.select('email')
+                .from('users')
+                .where('email', '=', email)
+                .then(response => {
+                return res.send(response[0])
             })
         }
     
     if (!email || !username || !password) {
         return  res.status(400).json('One of the fields is empty')
-    } else if (!emailTaken) {
-        return  res.status(400).json('Email already used')
+    } else if (emailTaken) {
+        return  res.status(400).json('Username or email is taken')
     } else {
         return setTimeout(register, 1000);
     }
