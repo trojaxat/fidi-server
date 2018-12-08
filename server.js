@@ -45,13 +45,13 @@ app.use(cors())
  
 app.get('/', (req, res) => { return res.send('Heroku working') })
 
-app.post('/signin', (req, res) => { signin.handleSignin(req, res, db, bcrypt) })
+app.post('/signin', (req, res) => { signin.handleSignIn(req, res, db, bcrypt) })
 
 app.post('/register', (req,res) => { register.handleRegister(req, res, db, bcrypt) })
 
 app.get('/profile/:username', (req,res) => { userGet.handleUserget(req, res, db) })
     
-app.post('/image', (req, res) => { loadUserIcons.handleLoadUserIcons(req, res, db) })
+app.post('/loadUserIcons', (req, res) => { loadUserIcons.handleLoadUserIcons(req, res, db) })
 
 app.post('/addImage', (req, res) => { addImage.handleAddImage(req, res, db) })
     
@@ -59,7 +59,3 @@ app.listen(process.env.PORT || 3000, ()=> {
     console.log(`Server is listening to port ${process.env.PORT}`);
 })
 
-// local host settings
-//app.listen(3000, ()=> {
-//    console.log(`Server is listening to port 3000`);
-//})

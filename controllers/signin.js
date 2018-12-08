@@ -1,4 +1,4 @@
-const handleSignini = (req, res, db, bcrypt) => {
+const handleSignIn = (req, res, db, bcrypt) => {
     const { email, password } = req.body;
     if (!email || !password) {
         return  res.status(400).json('One of the fields is empty')
@@ -21,5 +21,5 @@ const handleSignini = (req, res, db, bcrypt) => {
             
 
 module.exports {
-    handleSignin: handleSignin
+    handleSignIn: handleSignIn
     }
