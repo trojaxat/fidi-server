@@ -6,6 +6,6 @@ const handleUserGet = (req, res) => {
     })
 }
     
-module.exports {
+module.exports = {
     handleUserGet: handleUserGet
     }

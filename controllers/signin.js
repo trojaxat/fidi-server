@@ -20,6 +20,6 @@ const handleSignIn = (req, res, db, bcrypt) => {
 }
             
 
-module.exports {
+module.exports = {
     handleSignIn: handleSignIn
     }
