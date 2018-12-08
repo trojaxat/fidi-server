@@ -14,10 +14,10 @@ const knex = require('knex');
 
 
 //Controllers
-const register = require('./controller/register');
-const signin = require('./controller/signin');
-const userGet = require('./controller/userGet');
-const loadUserIcons = require('./controller/loadUserIcons');
+const register = require('./controllers/register');
+const signin = require('./controllers/signin');
+const userGet = require('./controllers/userGet');
+const loadUserIcons = require('./controllers/loadUserIcons');
 
 
 
