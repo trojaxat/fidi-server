@@ -17,8 +17,8 @@ const knex = require('knex');
 const register = require('./controllers/register');
 const signin = require('./controllers/signin');
 const userGet = require('./controllers/userGet');
+const addImage = require('./controllers/addImage');
 const loadUserIcons = require('./controllers/loadUserIcons');
-
 
 
 const db = knex({
@@ -40,6 +40,7 @@ const db = knex({
 //    database : 'fidi'
 //  }
 //});
+
 app.use(bodyParser.json());
 app.use(cors())
  
@@ -58,4 +59,8 @@ app.post('/addImage', (req, res) => { addImage.handleAddImage(req, res, db) })
 app.listen(process.env.PORT || 3000, ()=> { 
     console.log(`Server is listening to port ${process.env.PORT}`);
 })
+
+//app.listen(3000, ()=> { 
+//    console.log(`Server is listening to port 3000`);
+//})
 

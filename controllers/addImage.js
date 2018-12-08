@@ -1,16 +1,16 @@
-const addImage = (req, res, db) => {
-    const { email, link, place } = req.body;
+const handleAddImage = (req, res, db) => {
+    const { email, link, place, id } = req.body;
     db('photos')  
         .where('email', '=', email)
-        .insert({link: link, email: email, place: place})
+        .insert({link: link, email: email, place: place, id: id})
         .then(response => response)
     db('photos')      
         .select('link')
-        .where('place', '=', place)
+        .where('id', '=', id)
         .then(link => {
-        res.json(link[0])
-        }).catch(err => res.status(400).json('Photos not added'))
-})
+        return res.json(link[0])
+        }).catch(err => res.status(400).json('Photo not added'))
+}
 
 module.exports = {
     handleAddImage

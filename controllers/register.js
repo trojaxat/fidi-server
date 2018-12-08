@@ -1,6 +1,5 @@
 const handleRegister = (db, bcrypt, req, res) => {
     const { email, username, password } = req.body;
-    console.log('req.body', req.body);
     const hash = bcrypt.hashSync(password);
     const myPlaintextPassword = req.body.password;
     const saltRounds = 10;
@@ -9,8 +8,8 @@ const handleRegister = (db, bcrypt, req, res) => {
     db.select('*').from('users').where({username})
         .then(response => {
          res.send(response[0])
-         if (response[0].id) {
-            emailtaken = false
+         if (response[0].email) {
+            emailTaken = false
             return emailTaken
          }
     })
