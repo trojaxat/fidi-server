@@ -21,25 +21,25 @@ const addImage = require('./controllers/addImage');
 const loadUserIcons = require('./controllers/loadUserIcons');
 
 
-//const db = knex({
-//    client: 'pg',
-//  connection: {
-//    connectionString : process.env.DATABASE_URL,
-//    ssl : true
-//  }
-//});
-
-//old mysql database from local host
 const db = knex({
-    client: 'mysql',
-    version: '6.4',
+    client: 'pg',
   connection: {
-    host : '127.0.0.1',
-    user : 'root',
-    password : '',
-    database : 'fidi'
+    connectionString : process.env.DATABASE_URL,
+    ssl : true
   }
 });
+
+//old mysql database from local host
+//const db = knex({
+//    client: 'mysql',
+//    version: '6.4',
+//  connection: {
+//    host : '127.0.0.1',
+//    user : 'root',
+//    password : '',
+//    database : 'fidi'
+//  }
+//});
 
 app.use(bodyParser.json());
 app.use(cors())
@@ -56,11 +56,11 @@ app.post('/loadUserIcons', (req, res) => { loadUserIcons.handleLoadUserIcons(req
 
 app.post('/addImage', (req, res) => { addImage.handleAddImage(req, res, db) })
     
-//app.listen(process.env.PORT || 3000, ()=> { 
-//    console.log(`Server is listening to port ${process.env.PORT}`);
-//})
-
-app.listen(3000, ()=> { 
-    console.log(`Server is listening to port 3000`);
+app.listen(process.env.PORT || 3000, ()=> { 
+    console.log(`Server is listening to port ${process.env.PORT}`);
 })
+
+//app.listen(3000, ()=> { 
+//    console.log(`Server is listening to port 3000`);
+//})
 
