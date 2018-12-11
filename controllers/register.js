@@ -10,7 +10,6 @@ const handleRegister = (req, res, db, bcrypt) => {
         .where('email', '=', email)
         .then(response => {
             emailTaken = response[0].email
-            return emailTaken
          })
     
     const register = () => {
