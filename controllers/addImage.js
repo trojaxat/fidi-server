@@ -4,7 +4,8 @@ const handleAddImage = (req, res, db) => {
         .where('email', '=', email)
         .insert({link: link, email: email, place: place, id: id})
         .then(response => response)
-    db('photos')      
+    db('photos')
+        .returning('link')
         .select('link')
         .where('id', '=', id)
         .then(link => {
