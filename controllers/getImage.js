@@ -16,3 +16,4 @@ const handleGetImage = (req, res, db) => {
 
 module.exports = {
     handleGetImage
+    }
