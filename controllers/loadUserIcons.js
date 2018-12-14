@@ -6,7 +6,6 @@ const handleLoadUserIcons = (req, res, db) => {
         .where('email', '=', email)
         .orderBy('id','desc')
         .select('link', 'place')
-        .limit(10)
         .bind(console)
         .then(links => {
         return res.json(links)

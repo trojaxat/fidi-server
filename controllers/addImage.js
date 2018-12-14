@@ -3,8 +3,12 @@ const handleAddImage = (req, res, db) => {
     db('photos')
         .returning('*')
         .where('email', '=', email)
-        .insert({link: link, email: email, place: place, id: id})
-        .then(link => {
+        .insert({
+            link: link, 
+            email: email, 
+            place: place, 
+            id: id
+        }).then(link => {
         return res.json(link[0])
         }).catch(err => res.status(400).json('Photo not added'))
 }
