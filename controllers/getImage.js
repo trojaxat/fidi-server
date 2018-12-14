@@ -1,5 +1,5 @@
 const handleGetImage = (req, res, db) => {
-    const { email, name, place } = req.body;
+    const { email, name, place, search } = req.body;
     db('photos')
         .returning('link')
         .where({
