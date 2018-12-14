@@ -18,6 +18,7 @@ const register = require('./controllers/register');
 const signin = require('./controllers/signin');
 const userGet = require('./controllers/userGet');
 const addImage = require('./controllers/addImage');
+const updateImage = require('./controllers/updateImage');
 const loadUserIcons = require('./controllers/loadUserIcons');
 
 
@@ -55,6 +56,10 @@ app.get('/profile/:username', (req, res) => { userGet.handleUserget(req, res, db
 app.post('/loadUserIcons', (req, res) => { loadUserIcons.handleLoadUserIcons(req, res, db) })
 
 app.post('/addImage', (req, res) => { addImage.handleAddImage(req, res, db) })
+
+app.post('/updateImage', (req, res) => { updateImage.handleUpdateImage(req, res, db) })
+
+app.post('/deleteImage', (req, res) => { deleteImage.handleDeleteImage(req, res, db) })
     
 app.listen(process.env.PORT || 3000, ()=> { 
     console.log(`Server is listening to port ${process.env.PORT}`);
