@@ -1,7 +1,6 @@
 const handleDeleteImage = (req, res, db) => {
     const { email, link } = req.body;
     db('photos')
-        .returning('*')
         .where({
             email: email,
             link: link
