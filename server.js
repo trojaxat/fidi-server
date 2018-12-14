@@ -59,7 +59,7 @@ app.post('/addImage', (req, res) => { addImage.handleAddImage(req, res, db) })
 
 app.post('/updateImage', (req, res) => { updateImage.handleUpdateImage(req, res, db) })
 
-app.post('/deleteImage', (req, res) => { deleteImage.handleDeleteImage(req, res, db) })
+app.delete('/deleteImage', (req, res) => { deleteImage.handleDeleteImage(req, res, db) })
     
 app.listen(process.env.PORT || 3000, ()=> { 
     console.log(`Server is listening to port ${process.env.PORT}`);
