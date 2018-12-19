@@ -3,13 +3,10 @@ const handleRegister = (req, res, db, bcrypt) => {
     const hash = bcrypt.hashSync(password);
     const myPlaintextPassword = req.body.password;
     const saltRounds = 10;
-    let emailTaken;
     
     if (!email || !username || !password) {
         return  res.status(400).json('One of the fields is empty')
-    } else if (emailTaken) {
-        return  res.status(400).json('Username or email is taken')
-    } else {
+    }
         db.transaction(trx => {
           trx.insert({
                 username: username,
@@ -21,7 +18,7 @@ const handleRegister = (req, res, db, bcrypt) => {
           .into('users')
           .returning('email')
           .then(response => {
-            res.json(user[0]);
+            res.json(response);
               })
           })
           .then(trx.commit)
