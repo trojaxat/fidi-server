@@ -13,19 +13,24 @@ const handleRegister = (req, res, db, bcrypt) => {
          })
     
     const register = () => {
-            db('users')
-                .returning('*')
-                .insert({
-                    username: username,
-                    email: email,
-                    hash: hash,
-                    entries: 0,
-                    date: new Date()
-            }).then(response => {
-                return res.send(response[0])
-            }).catch(err => res.status(400).json('Unable to register'))   
-        }
-    
+        db.transaction(trx => {
+          trx.insert({
+                username: username,
+                email: email,
+                hash: hash,
+                entries: 0,
+                date: new Date()
+          })
+          .into('users')
+          .returning('email')
+          .then(response => {
+            res.json(user[0]);
+              })
+          })
+          .then(trx.commit)
+          .catch(trx.rollback)
+        }.catch(err => res.status(400).json('unable to register')) 
+
     if (!email || !username || !password) {
         return  res.status(400).json('One of the fields is empty')
     } else if (emailTaken) {
