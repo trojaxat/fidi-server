@@ -14,20 +14,16 @@ const handleRegister = (req, res, db, bcrypt) => {
     
     const register = () => {
             db('users')
+                .returning('*')
                 .insert({
                     username: username,
                     email: email,
                     hash: hash,
                     entries: 0,
                     date: new Date()
-            }).catch(err => res.status(400).json('Unable to register'))
-            
-            db.select('email')
-                .from('users')
-                .where('email', '=', email)
-                .then(response => {
+            }).then(response => {
                 return res.send(response[0])
-            })
+            }).catch(err => res.status(400).json('Unable to register'))   
         }
     
     if (!email || !username || !password) {
@@ -38,6 +34,32 @@ const handleRegister = (req, res, db, bcrypt) => {
         return setTimeout(register, 1000);
     }
 }
+
+
+//db.select('email')
+//        .from('users')
+//        .where('email', '=', email)
+//        .then(response => {
+//            emailTaken = response[0].email
+//         })
+//    
+//    const register = () => {
+//            db('users')
+//                .insert({
+//                    username: username,
+//                    email: email,
+//                    hash: hash,
+//                    entries: 0,
+//                    date: new Date()
+//            }).catch(err => res.status(400).json('Unable to register'))
+//            
+//            db.select('email')
+//                .from('users')
+//                .where('email', '=', email)
+//                .then(response => {
+//                return res.send(response[0])
+//            })
+//        }
 
 module.exports = {
     handleRegister
