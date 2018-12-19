@@ -5,13 +5,6 @@ const handleRegister = (req, res, db, bcrypt) => {
     const saltRounds = 10;
     let emailTaken;
     
-    db.select('email')
-        .from('users')
-        .where('email', '=', email)
-        .then(response => {
-            emailTaken = response[0].email
-         })
-    
     const register = () => {
         db.transaction(trx => {
           trx.insert({
