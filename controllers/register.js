@@ -5,7 +5,11 @@ const handleRegister = (req, res, db, bcrypt) => {
     const saltRounds = 10;
     let emailTaken;
     
-    const register = () => {
+    if (!email || !username || !password) {
+        return  res.status(400).json('One of the fields is empty')
+    } else if (emailTaken) {
+        return  res.status(400).json('Username or email is taken')
+    } else {
         db.transaction(trx => {
           trx.insert({
                 username: username,
@@ -23,13 +27,6 @@ const handleRegister = (req, res, db, bcrypt) => {
           .then(trx.commit)
           .catch(trx.rollback)
         }.catch(err => res.status(400).json('unable to register')) 
-
-    if (!email || !username || !password) {
-        return  res.status(400).json('One of the fields is empty')
-    } else if (emailTaken) {
-        return  res.status(400).json('Username or email is taken')
-    } else {
-        return setTimeout(register, 1000);
     }
 }
 
