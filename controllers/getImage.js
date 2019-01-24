@@ -1,13 +1,12 @@
 const handleGetImage = (req, res, db) => {
-    const { email, name, place, search } = req.body;
+    const { email, name, place } = req.body;
     db('photos')
         .returning('*')
         .where({
-            email: email
-        }).andWhere({
+            email: email,
             name: name
         }).orWhere({
-            place:place
+            place: place
         }).select('link')
         .then(link => {
         return res.json(link[0])
