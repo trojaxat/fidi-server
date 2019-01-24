@@ -3,10 +3,10 @@ const handleGetImage = (req, res, db) => {
     db('photos')
         .returning('*')
         .where({
-            email: email,
+            email: email
+        }).andWhere({
             name: name
         }).orWhere({
-            email:email,
             place:place
         }).select('link')
         .then(link => {
