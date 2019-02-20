@@ -5,7 +5,7 @@ const handleLoadUserIcons = (req, res, db) => {
     db('photos')  
         .where('email', '=', email)
         .orderBy('id','desc')
-        .select('link', 'place')
+        .select('id', 'link', 'place')
         .bind(console)
         .then(links => {
         return res.json(links)
