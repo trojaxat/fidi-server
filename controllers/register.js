@@ -22,7 +22,6 @@ const handleRegister = (req, res, db, bcrypt) => {
 }
 
 
-
 //db.select('email')
 //        .from('users')
 //        .where('email', '=', email)

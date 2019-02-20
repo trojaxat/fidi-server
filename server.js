@@ -59,6 +59,8 @@ app.post('/loadUserIcons', (req, res) => { loadUserIcons.handleLoadUserIcons(req
 
 app.post('/addImage', (req, res) => { addImage.handleAddImage(req, res, db) })
 
+app.post('/addComment', (req, res) => { addComment.handleAddComment(req, res, db) })
+
 app.post('/getImage', (req, res) => { getImage.handleGetImage(req, res, db) })
 
 app.post('/updateImage', (req, res) => { updateImage.handleUpdateImage(req, res, db) })
