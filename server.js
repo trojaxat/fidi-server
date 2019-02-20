@@ -18,6 +18,7 @@ const register = require('./controllers/register');
 const signin = require('./controllers/signin');
 const userGet = require('./controllers/userGet');
 const addImage = require('./controllers/addImage');
+const addComment = require('./controllers/addComment');
 const updateImage = require('./controllers/updateImage');
 const deleteImage = require('./controllers/deleteImage');
 const getImage = require('./controllers/getImage');
