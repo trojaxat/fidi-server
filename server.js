@@ -65,7 +65,7 @@ app.post('/addComment', (req, res) => { addComment.handleAddComment(req, res, db
 
 app.post('/getImage', (req, res) => { getImage.handleGetImage(req, res, db) })
 
-app.post('/getImageByLink', (req, res) => { getImage.handleGetImageByLink(req, res, db) })
+app.post('/getImageByLink', (req, res) => { getImageByLink.handleGetImageByLink(req, res, db) })
 
 app.post('/updateImage', (req, res) => { updateImage.handleUpdateImage(req, res, db) })
 
