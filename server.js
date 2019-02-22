@@ -22,7 +22,7 @@ const addComment = require('./controllers/addComment');
 const updateImage = require('./controllers/updateImage');
 const deleteImage = require('./controllers/deleteImage');
 const getImage = require('./controllers/getImage');
-const getCommments = require('./controllers/getImage');
+const getCommments = require('./controllers/getComments');
 const getImageByLink = require('./controllers/getImageByLink');
 const loadUserIcons = require('./controllers/loadUserIcons');
 
@@ -66,7 +66,7 @@ app.post('/addComment', (req, res) => { addComment.handleAddComment(req, res, db
 
 app.post('/getImage', (req, res) => { getImage.handleGetImage(req, res, db) })
 
-app.post('/getComments', (req, res) => { getImage.handleGetImage(req, res, db) })
+app.post('/getComments', (req, res) => { getComments.handleGetComments(req, res, db) })
 
 app.post('/getImageByLink', (req, res) => { getImageByLink.handleGetImageByLink(req, res, db) })
 
