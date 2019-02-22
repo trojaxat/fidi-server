@@ -22,7 +22,7 @@ const addComment = require('./controllers/addComment');
 const updateImage = require('./controllers/updateImage');
 const deleteImage = require('./controllers/deleteImage');
 const getImage = require('./controllers/getImage');
-const getCommments = require('./controllers/getComments');
+const getComments = require('./controllers/getComments');
 const getImageByLink = require('./controllers/getImageByLink');
 const loadUserIcons = require('./controllers/loadUserIcons');
 

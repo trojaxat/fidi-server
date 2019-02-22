@@ -8,7 +8,7 @@ const handleGetComments = (req, res, db) => {
             link: link     
         }).then(link => {
         return res.json(link[0])
-        }).catch(err => res.status(400).json('Coments not found'))
+        }).catch(err => res.status(400).json('Comments not found'))
 }
 
 module.exports = {
