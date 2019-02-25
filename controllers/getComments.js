@@ -7,7 +7,7 @@ const handleGetComments = (req, res, db) => {
         }).andWhere({
             link: link     
         }).then(link => {
-        return res.json(link[0])
+        return res.json(link)
         }).catch(err => res.status(400).json('Comments not found'))
 }
 
