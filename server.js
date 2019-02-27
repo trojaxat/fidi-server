@@ -25,6 +25,7 @@ const getImage = require('./controllers/getImage');
 const getComments = require('./controllers/getComments');
 const getImageByLink = require('./controllers/getImageByLink');
 const loadUserIcons = require('./controllers/loadUserIcons');
+const upvote = require('./controllers/upvote');
 
 
 const db = knex({
@@ -73,6 +74,8 @@ app.post('/getImageByLink', (req, res) => { getImageByLink.handleGetImageByLink(
 app.post('/updateImage', (req, res) => { updateImage.handleUpdateImage(req, res, db) })
 
 app.delete('/deleteImage', (req, res) => { deleteImage.handleDeleteImage(req, res, db) })
+
+app.post('/upvote', (req, res) => { upvote.handleUpvote(req, res, db) })
     
 app.listen(process.env.PORT || 3000, ()=> { 
     console.log(`Server is listening to port ${process.env.PORT}`);

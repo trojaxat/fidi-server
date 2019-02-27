@@ -7,7 +7,8 @@ const handleAddComment = (req, res, db) => {
             comment: comment, 
             email: email, 
             link: link, 
-            id: id
+            id: id,
+            score: 1,
         }).then(link => {
         return res.json(link[0])
         }).catch(err => res.status(400).json('Photo not added'))
