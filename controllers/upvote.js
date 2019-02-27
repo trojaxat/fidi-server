@@ -4,7 +4,7 @@ const handleUpvote = (req, res, db) => {
         .returning('*')
         .where('id', '=', id)
         .update({ score: score })
-        }).then(link => {
+        .then(link => {
         return res.json(link[0])
         }).catch(err => res.status(400).json('Photo not added'))
 }
