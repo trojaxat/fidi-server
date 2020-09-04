@@ -5,7 +5,7 @@ const express = require('express');
 //body-parser extracts the entire body portion of an incoming request stream and exposes it on req.body as something easier to interface with
 const bodyParser = require('body-parser');
 // encryption to hash passwords
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 // express initiates express.js framework for node.js
 const app = express();
 // connects to database like node.js
@@ -29,25 +29,25 @@ const loadUserIcons = require('./controllers/loadUserIcons');
 const upvote = require('./controllers/upvote');
 
 
-const db = knex({
-    client: 'pg',
-  connection: {
-    connectionString : process.env.DATABASE_URL,
-    ssl : true
-  }
-});
-
-////old mysql database from local host
 //const db = knex({
-//    client: 'mysql',
-//    version: '6.4',
+//    client: 'pg',
 //  connection: {
-//    host : '127.0.0.1',
-//    user : 'root',
-//    password : '',
-//    database : 'fidi'
+//    connectionString : process.env.DATABASE_URL,
+//    ssl : true
 //  }
 //});
+
+////old mysql database from local host
+const db = knex({
+    client: 'mysql',
+    version: '6.4',
+  connection: {
+    host : '127.0.0.1',
+    user : 'root',
+    password : '',
+    database : 'fidi'
+  }
+});
 
 app.use(bodyParser.json());
 app.use(cors())
@@ -80,11 +80,11 @@ app.delete('/deleteImage', (req, res) => { deleteImage.handleDeleteImage(req, re
 
 app.post('/upvote', (req, res) => { upvote.handleUpvote(req, res, db) })
     
-app.listen(process.env.PORT || 3000, ()=> { 
-    console.log(`Server is listening to port ${process.env.PORT}`);
-})
-
-//app.listen(3000, ()=> { 
-//    console.log(`Server is listening to port 3000`);
+//app.listen(process.env.PORT || 3000, ()=> { 
+//    console.log(`Server is listening to port ${process.env.PORT}`);
 //})
+
+app.listen(3000, ()=> { 
+    console.log(`Server is listening to port 3000`);
+})
 
