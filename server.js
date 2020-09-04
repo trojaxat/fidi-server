@@ -15,6 +15,7 @@ const knex = require('knex');
 
 //Controllers
 const register = require('./controllers/register');
+const register = require('./controllers/searchTerm');
 const signin = require('./controllers/signin');
 const userGet = require('./controllers/userGet');
 const addImage = require('./controllers/addImage');
@@ -68,6 +69,8 @@ app.post('/addComment', (req, res) => { addComment.handleAddComment(req, res, db
 app.post('/getImage', (req, res) => { getImage.handleGetImage(req, res, db) })
 
 app.post('/getComments', (req, res) => { getComments.handleGetComments(req, res, db) })
+
+app.post('/searchTerm', (req, res) => { searchTerm.handleGetComments(req, res, db) })
 
 app.post('/getImageByLink', (req, res) => { getImageByLink.handleGetImageByLink(req, res, db) })
 
