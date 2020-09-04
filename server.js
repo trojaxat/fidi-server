@@ -5,7 +5,7 @@ const express = require('express');
 //body-parser extracts the entire body portion of an incoming request stream and exposes it on req.body as something easier to interface with
 const bodyParser = require('body-parser');
 // encryption to hash passwords
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 // express initiates express.js framework for node.js
 const app = express();
 // connects to database like node.js
