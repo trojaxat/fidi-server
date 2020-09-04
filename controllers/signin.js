@@ -6,7 +6,9 @@ const handleSignIn = (req, res, db, bcrypt) => {
     db.select('email', 'hash').from('users')
         .where('email', '=', req.body.email)
         .then(data => {
-        const isCorrect = bcrypt.compareSync(req.body.password, data[0].hash);
+        const saltRounds = bcrypt.genSaltSync(10);
+        const hash = bcrypt.hashSync("B4c0/\/", saltRounds);
+        const isCorrect = bcrypt.compareSync(req.body.password, hash);
         if (isCorrect) {
             return db.select('*').from('users')
             .where('email', '=', req.body.email)

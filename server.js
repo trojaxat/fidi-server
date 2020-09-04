@@ -15,7 +15,7 @@ const knex = require('knex');
 
 //Controllers
 const register = require('./controllers/register');
-const register = require('./controllers/searchTerm');
+const searchTerm = require('./controllers/searchTerm');
 const signin = require('./controllers/signin');
 const userGet = require('./controllers/userGet');
 const addImage = require('./controllers/addImage');
@@ -37,7 +37,7 @@ const db = knex({
   }
 });
 
-//old mysql database from local host
+////old mysql database from local host
 //const db = knex({
 //    client: 'mysql',
 //    version: '6.4',

@@ -1,8 +1,8 @@
 const handleRegister = (req, res, db, bcrypt) => {
     const { email, username, password } = req.body;
-    const hash = bcrypt.hashSync(password);
     const myPlaintextPassword = req.body.password;
-    const saltRounds = 10;
+    const saltRounds = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(password, saltRounds);
     
     if (!email || !username || !password) {
         return  res.status(400).json('One of the fields is empty')
