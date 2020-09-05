@@ -19,6 +19,7 @@ const searchTerm = require('./controllers/searchTerm');
 const signin = require('./controllers/signin');
 const userGet = require('./controllers/userGet');
 const addImage = require('./controllers/addImage');
+const addPolitician = require('./controllers/addPolitician');
 const addComment = require('./controllers/addComment');
 const updateImage = require('./controllers/updateImage');
 const deleteImage = require('./controllers/deleteImage');
@@ -65,6 +66,8 @@ app.post('/loadUserIcons', (req, res) => { loadUserIcons.handleLoadUserIcons(req
 app.post('/addImage', (req, res) => { addImage.handleAddImage(req, res, db) })
 
 app.post('/addComment', (req, res) => { addComment.handleAddComment(req, res, db) })
+
+app.post('/addPolitician', (req, res) => { addPolitician.handleAddPolitician(req, res, db) })
 
 app.post('/getImage', (req, res) => { getImage.handleGetImage(req, res, db) })
 
