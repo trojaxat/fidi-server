@@ -29,7 +29,6 @@ const getImageByLink = require('./controllers/getImageByLink');
 const loadUserIcons = require('./controllers/loadUserIcons');
 const upvote = require('./controllers/upvote');
 
-
 const db = knex({
     client: 'pg',
   connection: {
@@ -38,7 +37,7 @@ const db = knex({
   }
 });
 
-////old mysql database from local host
+//old mysql database from local host
 //const db = knex({
 //    client: 'mysql',
 //    version: '6.4',
@@ -82,12 +81,15 @@ app.post('/updateImage', (req, res) => { updateImage.handleUpdateImage(req, res,
 app.delete('/deleteImage', (req, res) => { deleteImage.handleDeleteImage(req, res, db) })
 
 app.post('/upvote', (req, res) => { upvote.handleUpvote(req, res, db) })
-    
-app.listen(process.env.PORT || 3000, ()=> { 
-    console.log(`Server is listening to port ${process.env.PORT}`);
-})
 
-//app.listen(3000, ()=> { 
-//    console.log(`Server is listening to port 3000`);
-//})
+if (process.env.PORT) {
+    app.listen(process.env.PORT || 3030, ()=> { 
+        console.log(`Server is listening to port ${process.env.PORT}`);
+    })    
+} else {
+    app.listen(3030, ()=> { 
+        console.log(`Server is listening to port ${3030}`);
+    })
+}
+
 
