@@ -1,0 +1,1 @@
+// CREATE TABLE `fidi`.`audio_files` ( `hash` VARCHAR(128) NOT NULL , `name` VARCHAR(128) NOT NULL , `id` INT(16) NOT NULL , `last_modified` INT(16) NOT NULL , `user` VARCHAR(128) NOT NULL , PRIMARY KEY (`hash`)) ENGINE = InnoDB;

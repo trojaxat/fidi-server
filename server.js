@@ -30,6 +30,8 @@ const storage = multer.diskStorage({
         callback(null, req.body.hash + "." + audioType);
     }
 });
+
+// this has to keep myfile matching to the app information otherwise it doesnt work
 const upload = multer({ storage : storage}).single('myfile');  
 
 //Controllers
@@ -37,7 +39,7 @@ const register = require('./controllers/register');
 const searchTerm = require('./controllers/searchTerm');
 const signin = require('./controllers/signin');
 const userGet = require('./controllers/userGet');
-const addAudioFile = require('./controllers/addAudioFile');
+const addAudioDatabase = require('./controllers/addAudioDatabase');
 const addImage = require('./controllers/addImage');
 const addPolitician = require('./controllers/addPolitician');
 const addComment = require('./controllers/addComment');
@@ -73,12 +75,12 @@ app.use(bodyParser.json());
 app.use(cors())
 
 app.post('/addAudioFile',function(req,res){  
-    upload(req,res,function(err) {  
+    upload(req,res,function(err) {
         if(err) {
             return res.end("Error uploading file.");  
-        }  
-        res.end("File is uploaded successfully!");  
-    }); 
+        }
+        return res.end("File is uploaded successfully!");
+    });
 });
 
 app.get('/', (req, res) => { return res.send('Heroku working') })
@@ -93,7 +95,7 @@ app.post('/loadUserIcons', (req, res) => { loadUserIcons.handleLoadUserIcons(req
 
 app.post('/addImage', (req, res) => { addImage.handleAddImage(req, res, db) })
 
-app.post('/addAudioFile', (req, res) => { addAudioFile.handleAddAudioFile(req, res, db) })
+app.post('/addAudioDatabase', (req, res) => { addAudioDatabase.handleAddAudioDatabase(req, res, db) })
 
 app.post('/addComment', (req, res) => { addComment.handleAddComment(req, res, db) })
 
@@ -103,7 +105,7 @@ app.post('/getImage', (req, res) => { getImage.handleGetImage(req, res, db) })
 
 app.post('/getComments', (req, res) => { getComments.handleGetComments(req, res, db) })
 
-app.post('/searchTerm', (req, res) => { searchTerm.handleGetComments(req, res, db) })
+app.post('/searchTerm', (req, res) => { searchTerm.handleSearchTerm(req, res, db) })
 
 app.post('/getImageByLink', (req, res) => { getImageByLink.handleGetImageByLink(req, res, db) })
 
