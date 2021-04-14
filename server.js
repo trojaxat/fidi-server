@@ -25,7 +25,7 @@ const storage = multer.diskStorage({
   },  
     filename: function(req, file, callback) {
         path = path.extname(file.originalname);
-        callback(null, req.body.name + '-' + path);
+        callback(null, file.originalname);
     }
 });
 const upload = multer({ storage : storage}).single('myfile');  
@@ -70,10 +70,9 @@ const db = knex({
 app.use(bodyParser.json());
 app.use(cors())
 
-app.post('/uploadjavatpoint',function(req,res){  
+app.post('/addAudioFile',function(req,res){  
     upload(req,res,function(err) {  
         if(err) {
-            console.log(err);
             return res.end("Error uploading file.");  
         }  
         res.end("File is uploaded successfully!");  
