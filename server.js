@@ -6,18 +6,36 @@ const express = require('express');
 const bodyParser = require('body-parser');
 // encryption to hash passwords
 const bcrypt = require('bcryptjs');
-// express initiates express.js framework for node.js
-const app = express();
 // connects to database like node.js
 const knex = require('knex');
-// package.json file can change node server to nodemon server to test server on local host againa
 
+const ejs = require('ejs');
+// express initiates express.js framework for node.js
+const app = express();
+app.set('view engine', 'ejs')
+
+// handles the database storage
+const multer = require('multer');
+// for file upload
+var path = require('path');
+
+const storage = multer.diskStorage({
+  destination: function (req, file, callback) {  
+    callback(null, './public/uploads');  
+  },  
+    filename: function(req, file, callback) {
+        path = path.extname(file.originalname);
+        callback(null, req.body.name + '-' + path);
+    }
+});
+const upload = multer({ storage : storage}).single('myfile');  
 
 //Controllers
 const register = require('./controllers/register');
 const searchTerm = require('./controllers/searchTerm');
 const signin = require('./controllers/signin');
 const userGet = require('./controllers/userGet');
+const addAudioFile = require('./controllers/addAudioFile');
 const addImage = require('./controllers/addImage');
 const addPolitician = require('./controllers/addPolitician');
 const addComment = require('./controllers/addComment');
@@ -29,29 +47,39 @@ const getImageByLink = require('./controllers/getImageByLink');
 const loadUserIcons = require('./controllers/loadUserIcons');
 const upvote = require('./controllers/upvote');
 
-const db = knex({
-    client: 'pg',
-  connection: {
-    connectionString : process.env.DATABASE_URL,
-    ssl : true
-  }
-});
-
-//old mysql database from local host
 //const db = knex({
-//    client: 'mysql',
-//    version: '6.4',
+//    client: 'pg',
 //  connection: {
-//    host : '127.0.0.1',
-//    user : 'root',
-//    password : '',
-//    database : 'fidi'
+//    connectionString : process.env.DATABASE_URL,
+//    ssl : true
 //  }
 //});
 
+//old mysql database from local host
+const db = knex({
+    client: 'mysql',
+    version: '6.4',
+  connection: {
+    host : '127.0.0.1',
+    user : 'root',
+    password : '',
+    database : 'fidi'
+  }
+});
+
 app.use(bodyParser.json());
 app.use(cors())
- 
+
+app.post('/uploadjavatpoint',function(req,res){  
+    upload(req,res,function(err) {  
+        if(err) {
+            console.log(err);
+            return res.end("Error uploading file.");  
+        }  
+        res.end("File is uploaded successfully!");  
+    }); 
+});
+
 app.get('/', (req, res) => { return res.send('Heroku working') })
 
 app.post('/signin', (req, res) => { signin.handleSignIn(req, res, db, bcrypt) })
@@ -63,6 +91,8 @@ app.get('/profile/:username', (req, res) => { userGet.handleUserget(req, res, db
 app.post('/loadUserIcons', (req, res) => { loadUserIcons.handleLoadUserIcons(req, res, db) })
 
 app.post('/addImage', (req, res) => { addImage.handleAddImage(req, res, db) })
+
+app.post('/addAudioFile', (req, res) => { addAudioFile.handleAddAudioFile(req, res, db) })
 
 app.post('/addComment', (req, res) => { addComment.handleAddComment(req, res, db) })
 
