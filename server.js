@@ -25,7 +25,9 @@ const storage = multer.diskStorage({
   },  
     filename: function(req, file, callback) {
         path = path.extname(file.originalname);
-        callback(null, file.originalname);
+        var str = file.originalname;
+        var audioType = str.split('.').pop();
+        callback(null, req.body.hash + "." + audioType);
     }
 });
 const upload = multer({ storage : storage}).single('myfile');  
