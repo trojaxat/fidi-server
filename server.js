@@ -14,17 +14,16 @@ const ejs = require('ejs');
 const app = express();
 app.set('view engine', 'ejs')
 
-// handles the database storage
-const multer = require('multer');
-// for file upload
-var path = require('path');
+
 
 //Controllers
 const register = require('./controllers/register');
+const getSong = require('./controllers/getSong');
 const searchTerm = require('./controllers/searchTerm');
 const signin = require('./controllers/signin');
 const userGet = require('./controllers/userGet');
 const addAudioDatabase = require('./controllers/addAudioDatabase');
+const addAudioFile = require('./controllers/addAudioFile');
 const addImage = require('./controllers/addImage');
 const addPolitician = require('./controllers/addPolitician');
 const addComment = require('./controllers/addComment');
@@ -59,28 +58,6 @@ const db = knex({
 app.use(bodyParser.json());
 app.use(cors())
 
-// Specific audio upload
-const storage = multer.diskStorage({
-  destination: function (req, file, callback) {  
-    callback(null, './public/uploads');  
-  },  
-    filename: function(req, file, callback) {
-        path = path.extname(file.originalname);
-        var str = file.originalname;
-        var audioType = str.split('.').pop();
-        callback(null, req.body.hash + "." + audioType);
-    }
-});
-// this has to keep myfile matching to the app information otherwise it doesnt work
-const upload = multer({ storage : storage}).single('myfile');  
-app.post('/addAudioFile',function(req,res){  
-    upload(req,res,function(err) {
-        if(err) {
-            return res.end("Error uploading file.");  
-        }
-        return res.end("File is uploaded successfully!");
-    });
-});
 
 app.get('/', (req, res) => { return res.send('Heroku working') })
 
@@ -88,11 +65,15 @@ app.post('/signin', (req, res) => { signin.handleSignIn(req, res, db, bcrypt) })
 
 app.post('/register', (req, res) => { register.handleRegister(req, res, db, bcrypt) })
 
+app.post('/getSong', (req, res) => { getSong.handleGetSong(req, res, db) })
+
 app.get('/profile/:username', (req, res) => { userGet.handleUserget(req, res, db) })
     
 app.post('/loadUserIcons', (req, res) => { loadUserIcons.handleLoadUserIcons(req, res, db) })
 
 app.post('/addImage', (req, res) => { addImage.handleAddImage(req, res, db) })
+
+app.post('/addAudioFile', (req, res) => { addAudioFile.handleAddAudioFile(req, res, db) })
 
 app.post('/addAudioDatabase', (req, res) => { addAudioDatabase.handleAddAudioDatabase(req, res, db) })
 
