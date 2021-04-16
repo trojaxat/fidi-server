@@ -28,6 +28,7 @@ const getSong = require('./controllers/getSong');
 const userGet = require('./controllers/userGet');
 const getImage = require('./controllers/getImage');
 const getComments = require('./controllers/getComments');
+const getProjectList = require('./controllers/getProjectList');
 const getImageByLink = require('./controllers/getImageByLink');
 
 // Load media
@@ -62,6 +63,7 @@ app.get('/profile/:username', (req, res) => { userGet.handleUserget(req, res, db
 app.post('/getSong', (req, res) => { getSong.handleGetSong(req, res, db) })
 app.post('/getImage', (req, res) => { getImage.handleGetImage(req, res, db) })
 app.post('/getImageByLink', (req, res) => { getImageByLink.handleGetImageByLink(req, res, db) })
+app.post('/getProjectList', (req, res) => { getProjectList.handleGetProjectList(req, res, db) })
 app.post('/getComments', (req, res) => { getComments.handleGetComments(req, res, db) })
 
 // Load media
