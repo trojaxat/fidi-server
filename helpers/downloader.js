@@ -7,6 +7,7 @@ const handleDownloadFile = (url) => {
     let fileName = hash + "." + fileType;
     res.type(fileType);
     return res.download(songPath + "//" + fileName, fileName, (err) => {
+        console.log('err', err);
       });
 }
 
