@@ -17,30 +17,6 @@ app.use(bodyParser.json());
 app.use(cors());
 
 /*
-* Database
-*/
-
-//const db = knex({
-//    client: 'pg',
-//  connection: {
-//    connectionString : process.env.DATABASE_URL,
-//    ssl : true
-//  }
-//});
-
-//old mysql database from local host
-const db = knex({
-    client: 'mysql',
-    version: '6.4',
-  connection: {
-    host : '127.0.0.1',
-    user : 'root',
-    password : '',
-    database : 'fidi'
-  }
-});
-
-/*
 * Controllers
 */
 // Login
@@ -107,6 +83,34 @@ app.post('/addPolitician', (req, res) => { addPolitician.handleAddPolitician(req
 // Query database
 app.get('/', (req, res) => { return res.send('Heroku working') })
 app.post('/searchTerm', (req, res) => { searchTerm.handleSearchTerm(req, res, db) })
+
+/*
+* Database
+*/
+let db;
+if (process.env.PORT) {
+    console.log('This is the host server');
+    db = knex({
+        client: 'pg',
+          connection: {
+            connectionString : process.env.DATABASE_URL,
+            ssl : true
+          }
+        });
+} else {
+ //old mysql database from local host
+        console.log('This is the local server');
+     db = knex({
+        client: 'mysql',
+        version: '6.4',
+          connection: {
+            host : '127.0.0.1',
+            user : 'root',
+            password : '',
+            database : 'fidi'
+          }
+        });   
+}
 
 /*
 * Port settings
