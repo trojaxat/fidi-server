@@ -1,7 +1,7 @@
 // handles the database storage
 const multer = require('multer');
 // for file upload
-var path = require('path');
+var uploadPath = require('path');
 
 // Specific audio upload
 const handleStorage = (req, file, callback) => {
@@ -10,7 +10,7 @@ const handleStorage = (req, file, callback) => {
             callback(null, './public/uploads');  
           },  
             filename: function(req, file, callback) {
-                path = path.extname(file.originalname);
+                uploadPath = uploadPath.extname(file.originalname);
                 var str = file.originalname;
                 var audioType = str.split('.').pop();
                 callback(null, req.body.hash + "." + audioType);

@@ -1,5 +1,5 @@
 // Handles the file downloading
-const path = require('path');
+var songPath = require('path');
 const downloader = require("../helpers/downloader");
 
 const handleGetSong = (req, res, db) => {

@@ -67,6 +67,7 @@ app.post('/getProjectList', (req, res) => { getProjectList.handleGetProjectList(
 app.post('/getComments', (req, res) => { getComments.handleGetComments(req, res, db) })
 
 // Load media
+app.post('/project/:id', (req, res) => { playMediaServer.handlePlayMediaServer(req, res, db) })
 app.get('/project/:id', (req, res) => { playMediaServer.handlePlayMediaServer(req, res, db) })
 app.post('/loadUserIcons', (req, res) => { loadUserIcons.handleLoadUserIcons(req, res, db) })
 
