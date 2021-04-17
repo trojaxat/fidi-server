@@ -29,6 +29,7 @@ const userGet = require("./controllers/userGet");
 const getImage = require("./controllers/getImage");
 const getComments = require("./controllers/getComments");
 const getProjectList = require("./controllers/getProjectList");
+const getStemList = require("./controllers/getStemList");
 const getImageByLink = require("./controllers/getImageByLink");
 
 // Load media
@@ -42,6 +43,7 @@ const upvote = require("./controllers/upvote");
 
 // Add to database
 const addAudioDatabase = require("./controllers/addAudioDatabase");
+const addStemDatabase = require("./controllers/addStemDatabase");
 const addAudioFile = require("./controllers/addAudioFile");
 const addImage = require("./controllers/addImage");
 const addPolitician = require("./controllers/addPolitician");
@@ -78,6 +80,9 @@ app.post("/getImageByLink", (req, res) => {
 app.post("/getProjectList", (req, res) => {
   getProjectList.handleGetProjectList(req, res, db);
 });
+app.post("/getStemList", (req, res) => {
+  getStemList.handleGetStemList(req, res, db);
+});
 app.post("/getComments", (req, res) => {
   getComments.handleGetComments(req, res, db);
 });
@@ -113,6 +118,9 @@ app.post("/addAudioFile", (req, res) => {
 });
 app.post("/addAudioDatabase", (req, res) => {
   addAudioDatabase.handleAddAudioDatabase(req, res, db);
+});
+app.post("/addStemDatabase", (req, res) => {
+  addStemDatabase.handleAddStemDatabase(req, res, db);
 });
 app.post("/addComment", (req, res) => {
   addComment.handleAddComment(req, res, db);
