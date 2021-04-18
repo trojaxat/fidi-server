@@ -1,7 +1,7 @@
 // handles the database storage
 const uploader = require("../helpers/uploader");
 
-const handleAddAudioFile = (req, res, db) => {
+const handleAddAudioFile = (req, res) => {
   var storage = uploader.handleStorage(req, res);
   var upload = uploader.handleUpload(storage);
   upload(req, res, function (err) {

@@ -1,5 +1,5 @@
 const handleAddAudioDatabase = (req, res, db) => {
-  const { email, name, hash } = req.body;
+  const { email, name, hash, private } = req.body;
   if (!email || !name || !hash) {
     return res.status(400).json("One of the fields is empty");
   }
@@ -13,6 +13,7 @@ const handleAddAudioDatabase = (req, res, db) => {
     .insert({
       hash: hash,
       name: name,
+      private: private,
       email: email,
       last_modified: lastModified,
     })
