@@ -15,6 +15,7 @@ const app = express(); // express initiates express.js framework for node.js
 app.set("view engine", "ejs");
 app.use(bodyParser.json());
 app.use(cors());
+app.use(express.static(__dirname + "/public/uploads/"));
 
 /*
  * Controllers
@@ -25,7 +26,7 @@ const signin = require("./controllers/signin");
 
 // Get from database
 const getSong = require("./controllers/getSong");
-const userGet = require("./controllers/userGet");
+const getUser = require("./controllers/getUser");
 const getImage = require("./controllers/getImage");
 const getComments = require("./controllers/getComments");
 const getProjectList = require("./controllers/getProjectList");
@@ -66,8 +67,8 @@ app.post("/register", (req, res) => {
 });
 
 // Get from database
-app.get("/profile/:username", (req, res) => {
-  userGet.handleUserget(req, res, db);
+app.post("/getUser", (req, res) => {
+  getUser.handleGetUser(req, res, db);
 });
 app.post("/getSong", (req, res) => {
   getSong.handleGetSong(req, res, db);
