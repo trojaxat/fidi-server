@@ -17,7 +17,7 @@ const handleStorageDestination = multer.diskStorage({
 const handleFilename = (file, hash) => {
   let uploadPath = require("path");
   let pathExtension = uploadPath.extname(file.originalname);
-  return hash + "." + pathExtension;
+  return hash + pathExtension;
 };
 
 // // this has to keep myfile matching to the app information otherwise it doesnt work
