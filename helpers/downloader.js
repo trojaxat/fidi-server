@@ -1,16 +1,17 @@
-const http = require('http');
-const fs = require('fs');
+const downloadPath = require("path");
 
-const handleDownloadFile = (url) => {
-    let fileType = audio[0].name.split('.').pop();
-    let songPath = path.resolve("public/uploads")
-    let fileName = hash + "." + fileType;
-    res.type(fileType);
-    return res.download(songPath + "//" + fileName, fileName, (err) => {
-        console.log('err', err);
-      });
-}
+const handleDownloadFilePath = (filePath, file, res) => {
+  if (file.name && file.hash) {
+    let fileType = file.name.split(".").pop();
+    let path = downloadPath.resolve(filePath);
+    let fileName = file.hash + "." + fileType;
+    filePath = path + "\\" + fileName;
+    return res.download(filePath, fileName);
+  } else {
+    return res.status(400).json("File information not found");
+  }
+};
 
 module.exports = {
-    handleDownloadFile
-    }
+  handleDownloadFilePath,
+};
