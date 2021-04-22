@@ -1,6 +1,5 @@
 // // handles the database storage
 const multer = require("multer");
-const uploadPath = require("path");
 
 // // Specific audio upload
 const handleStorageDestination = () => {
@@ -17,6 +16,7 @@ const handleStorageDestination = () => {
 };
 
 const handleFilename = (file, hash) => {
+  let uploadPath = require("path");
   let pathExtension = uploadPath.extname(file.originalname);
   return hash + pathExtension;
 };

@@ -2,7 +2,7 @@
 const uploader = require("../helpers/uploader");
 
 const handleAddAudioFile = (req, res) => {
-  let storage = uploader.handleStorageDestination;
+  let storage = uploader.handleStorageDestination(req, res);
   let upload = uploader.handleUpload(storage);
 
   upload(req, res, function (err) {
@@ -15,7 +15,7 @@ const handleAddAudioFile = (req, res) => {
 
     if (req.fileValidationError) {
       return res.send(req.fileValidationError);
-    } else if (!req.file) {
+    } else if (!req.files[0]) {
       return res.send("Please select a file to upload");
     } else if (err) {
       return res.send(err);

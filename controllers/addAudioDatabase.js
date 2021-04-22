@@ -1,6 +1,6 @@
 const handleAddAudioDatabase = (req, res, db) => {
   const { email, name, hash, private } = req.body;
-  if (!email || !name || !hash) {
+  if (!name || !hash) {
     return res.status(400).json("One of the fields is empty");
   }
 
