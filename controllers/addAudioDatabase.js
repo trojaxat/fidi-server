@@ -21,7 +21,9 @@ const handleAddAudioDatabase = (req, res, db) => {
     .then((response) => {
       res.json(response[0]);
     })
-    .catch((err) => res.status(400).json("Audio file information not added"));
+    .catch((err) => {
+      return res.status(400).json("Audio file information not added");
+    });
 };
 
 module.exports = {

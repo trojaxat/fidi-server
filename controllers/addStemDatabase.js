@@ -1,23 +1,23 @@
 const handleAddStemDatabase = (req, res, db) => {
   const {
-    email,
+    last_modified_email,
     name,
-    hash,
+    project_hash,
     filetype,
     locked,
     downloadable,
     private,
   } = req.body;
 
-  if (!email || !name || !hash || !filetype) {
+  if (!last_modified_email || !name || !project_hash || !filetype) {
     return res.status(400).json("One of the fields is empty");
   }
 
   db("stems")
     .insert({
-      project_hash: hash,
+      project_hash: project_hash,
       name: name,
-      last_modified_email: email,
+      last_modified_email: last_modified_email,
       last_modified_date: Date.now(),
       filetype: filetype,
       locked: locked,
