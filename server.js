@@ -40,6 +40,7 @@ const loadUserIcons = require("./controllers/loadUserIcons");
 // Modify
 const updateImage = require("./controllers/updateImage");
 const updateProject = require("./controllers/updateProject");
+const updateStem = require("./controllers/updateStem");
 const deleteImage = require("./controllers/deleteImage");
 const upvote = require("./controllers/upvote");
 
@@ -106,6 +107,9 @@ app.post("/updateImage", (req, res) => {
 });
 app.post("/updateProject", (req, res) => {
   updateProject.handleUpdateProject(req, res, db);
+});
+app.post("/updateStem", (req, res) => {
+  updateStem.handleUpdateStem(req, res, db);
 });
 app.delete("/deleteImage", (req, res) => {
   deleteImage.handleDeleteImage(req, res, db);

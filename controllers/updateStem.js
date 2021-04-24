@@ -1,4 +1,4 @@
-const handleUpdateProject = (req, res, db) => {
+const handleUpdateStem = (req, res, db) => {
   let queryBuilder = db("audio_files").returning("*");
 
   if (req.body.hash) {
@@ -18,7 +18,7 @@ const handleUpdateProject = (req, res, db) => {
       });
     }
   } else {
-    return res.status(400).json("Project not found");
+    return res.status(400).json("Stem not found");
   }
 
   queryBuilder
@@ -26,10 +26,10 @@ const handleUpdateProject = (req, res, db) => {
       return res.json(!!response);
     })
     .catch((err) => {
-      return res.status(400).json("Project not changed");
+      return res.status(400).json("Stem not changed");
     });
 };
 
 module.exports = {
-  handleUpdateProject,
+  handleUpdateStem,
 };
