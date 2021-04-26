@@ -10,15 +10,14 @@ const handleAddAudioFile = (req, res) => {
     // req.body contains information of text fields, if there were any
 
     if (err) {
-      return res.end("Error uploading file.");
-    }
-
-    if (req.fileValidationError) {
-      return res.send(req.fileValidationError);
-    } else if (!req.files[0]) {
-      return res.send("Please select a file to upload");
-    } else if (err) {
-      return res.send(err);
+      res.status(400);
+      if (req.fileValidationError) {
+        return res.send(req.fileValidationError);
+      } else if (!req.files[0]) {
+        return res.send("Please select a file to upload");
+      } else if (err) {
+        return res.send(err);
+      }
     }
 
     res.send(`Files uploaded: ${req.body.hash}`);
