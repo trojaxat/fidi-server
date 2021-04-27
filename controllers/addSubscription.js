@@ -1,4 +1,4 @@
-export const handleAddSubscription = (req, res, db) => {
+const handleAddSubscription = (req, res, db) => {
     const { email, subscription, state } = req.body;
 
     if (!email) {
@@ -34,4 +34,8 @@ export const handleAddSubscription = (req, res, db) => {
         });
     }
 };
+  
+module.exports = {
+    handleAddSubscription,
+  };
   
