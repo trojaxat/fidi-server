@@ -13,7 +13,8 @@ const app = express(); // express initiates express.js framework for node.js
  * Initialise App
  */
 app.set("view engine", "ejs");
-app.use(bodyParser.json());
+app.use(express.urlencoded({extended: false}));
+app.use(express.json());
 app.use(cors());
 app.use(express.static(__dirname + "/public/uploads/"));
 
@@ -49,6 +50,7 @@ const addAudioDatabase = require("./controllers/addAudioDatabase");
 const addStemDatabase = require("./controllers/addStemDatabase");
 const addAudioFile = require("./controllers/addAudioFile");
 const addImage = require("./controllers/addImage");
+const addSubscription = require("./controllers/addSubscription");
 const addPolitician = require("./controllers/addPolitician");
 const addComment = require("./controllers/addComment");
 
@@ -121,6 +123,9 @@ app.post("/upvote", (req, res) => {
 // Add to database
 app.post("/addImage", (req, res) => {
   addImage.handleAddImage(req, res, db);
+});
+app.post("/addSubscription", (req, res) => {
+  addSubscription.handleAddSubscription(req, res, db);
 });
 app.post("/addAudioFile", (req, res) => {
   addAudioFile.handleAddAudioFile(req, res, db);

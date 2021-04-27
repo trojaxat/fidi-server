@@ -3,3 +3,5 @@ node_modules
 *.mp3
 *.wav
 .vscode/launch.json
+sendGrid.js
+testEmail.js

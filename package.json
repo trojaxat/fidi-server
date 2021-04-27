@@ -1,9 +1,10 @@
 {
   "name": "fidi-react-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "Server for all my fun apps and more serious ones as well",
+  "type": "module",
   "engines": {
-    "node": "10.13.0"
+    "node": "14.16.1"
   },
   "main": "index.js",
   "scripts": {
@@ -13,6 +14,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@sendgrid/mail": "^7.4.2",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
