@@ -6,9 +6,8 @@ import express from "express"; // web application framework for node.js
 import bcrypt from "bcryptjs"; // encryption to hash passwords
 import knex from "knex"; // connects to database like node.js
 import ejs from "ejs"; // embed JavaScript templates
-import serverPath from "path"; // Used here to define the directory
 import fileUpload from 'express-fileupload';
-
+import __dirname from './helpers/dir.mjs';
 
 /*
  * Initialise App
@@ -19,7 +18,6 @@ app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 app.use(cors());
 app.use(fileUpload());
-const __dirname = serverPath.resolve(serverPath.dirname(''));
 app.use(express.static(__dirname + "/public/uploads/"));
 
 /*

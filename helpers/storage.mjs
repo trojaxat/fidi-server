@@ -1,22 +1,8 @@
-// // handles the database storage
-import multer from "multer";
 import uploadPath from "path";
+import __dirname from './dir.mjs';
 
-// // Specific audio upload
-export default function storageDestination() {
-  return multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, "./public/uploads/");
-    },
-
-    // By default, multer removes file extensions so let's add them back
-    filename: function (req, file, cb) {
-      cb(null, filename(file, req.body.hash));
-    },
-  });
-};
-
-const filename = (file, hash) => {
-  let pathExtension = uploadPath.extname(file.originalname);
-  return hash + pathExtension;
+export default function storageDestination(upload) {
+  let basePath = __dirname + '\\public\\uploads\\';
+  let fileExtension = uploadPath.extname(upload.name);
+  return basePath + upload.md5 + fileExtension;
 };

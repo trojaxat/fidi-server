@@ -1,29 +1,24 @@
 // handles the database storage
-import storageDestination from "../helpers/uploader.mjs";
+import storageDestination from "../helpers/storage.mjs";
+import uploader from "../helpers/uploader.mjs";
 
 export default function addAudioFile(req, res) {
   let upload = req.files.myfile;
-  console.log('upload :', upload);
   // let storage = storageDestination(req, res);
   // let uploader = upload(storage);
+  let storagePath = storageDestination(upload);
+  console.log('storagePath :', storagePath);
 
-    if (!upload) {
-      res.status(400);
-      if (req.fileValidationError) {
-        return res.send(req.fileValidationError);
-      } else if (!req.files) {
-        return res.send("Please select a file to upload");
-      } else if (err) {
-        return res.send(err);
-      }
+  if (!upload || !storagePath) {
+    res.status(400);
+    if (req.fileValidationError) {
+      return res.send(req.fileValidationError);
+    } else if (!req.files) {
+      return res.send("Please select a file to upload");
+    } else if (err) {
+      return res.send(err);
     }
+  }
 
-   // Use the mv() method to place the file somewhere on your server
-   upload.mv(__dirname + '/uploads/' + upload.name, function(err) {
-    if (err) {
-      console.log('err :', err);
-      return res.status(500).send(err);
-    }
-      res.send(`Files uploaded: ${req.body.hash}`);
-    });
+  uploader(res, upload, storagePath);
 };
