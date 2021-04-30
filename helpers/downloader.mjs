@@ -1,6 +1,6 @@
-const downloadPath = require("path");
+import downloadPath from "path";
 
-const handleDownloadFilePath = (filePath, file, res) => {
+export default function downloader(filePath, file, res) {
   if (file.name && file.hash) {
     let fileType = file.name.split(".").pop();
     let path = downloadPath.resolve(filePath);
@@ -10,8 +10,4 @@ const handleDownloadFilePath = (filePath, file, res) => {
   } else {
     return res.status(400).json("File information not found");
   }
-};
-
-module.exports = {
-  handleDownloadFilePath,
 };

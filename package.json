@@ -1,10 +1,11 @@
 {
   "name": "fidi-react-api",
   "version": "1.0.0",
-  "description": "Server for all my fun apps and more serious ones as well",
+  "type": "module",
   "engines": {
     "node": "14.16.1"
   },
+  "description": "Server for all my fun apps and more serious ones as well",
   "main": "index.js",
   "scripts": {
     "start": "nodemon server.js",

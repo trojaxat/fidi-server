@@ -1,4 +1,4 @@
-const handleUpdateImage = (req, res, db) => {
+export default function updateImage(req, res, db) {
   const { name, email, link, place, id } = req.body;
   db("photos")
     .returning("*")
@@ -16,6 +16,3 @@ const handleUpdateImage = (req, res, db) => {
     .catch((err) => res.status(400).json("Photo not added"));
 };
 
-module.exports = {
-  handleUpdateImage,
-};

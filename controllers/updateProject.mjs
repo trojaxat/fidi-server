@@ -1,4 +1,4 @@
-const handleUpdateProject = (req, res, db) => {
+export default function updateProject(req, res, db) {
   let queryBuilder = db("audio_files").returning("*");
 
   if (req.body.hash) {
@@ -28,8 +28,4 @@ const handleUpdateProject = (req, res, db) => {
     .catch((err) => {
       return res.status(400).json("Project not changed");
     });
-};
-
-module.exports = {
-  handleUpdateProject,
 };

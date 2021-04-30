@@ -1,5 +1,5 @@
-const handleAddAudioDatabase = (req, res, db) => {
-  const { email, name, hash, private } = req.body;
+export default function addAudioDatabase(req, res, db) {
+  const { email, name, hash, privateValue } = req.body;
   if (!name || !hash) {
     return res.status(400).json("One of the fields is empty");
   }
@@ -13,7 +13,7 @@ const handleAddAudioDatabase = (req, res, db) => {
     .insert({
       hash: hash,
       name: name,
-      private: private,
+      private: privateValue,
       email: email,
       last_modified: lastModified,
     })
@@ -24,8 +24,4 @@ const handleAddAudioDatabase = (req, res, db) => {
     .catch((err) => {
       return res.status(400).json("Audio file information not added");
     });
-};
-
-module.exports = {
-  handleAddAudioDatabase,
 };

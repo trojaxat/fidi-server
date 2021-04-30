@@ -1,11 +1,12 @@
 // handles the database storage
-const uploader = require("../helpers/uploader");
+import storageDestination from "../helpers/uploader.mjs";
+import upload from "../helpers/uploader.mjs";
 
-const handleAddAudioFile = (req, res) => {
-  let storage = uploader.handleStorageDestination(req, res);
-  let upload = uploader.handleUpload(storage);
+export default function addAudioFile(req, res) {
+  let storage = storageDestination(req, res);
+  let uploader = upload(storage);
 
-  upload(req, res, function (err) {
+  uploader(req, res, function (err) {
     // req.file contains information of uploaded file
     // req.body contains information of text fields, if there were any
 
@@ -22,8 +23,4 @@ const handleAddAudioFile = (req, res) => {
 
     res.send(`Files uploaded: ${req.body.hash}`);
   });
-};
-
-module.exports = {
-  handleAddAudioFile,
 };

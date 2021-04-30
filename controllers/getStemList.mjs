@@ -1,4 +1,4 @@
-const handleGetStemList = (req, res, db) => {
+export default function getStemList(req, res, db) {
   const { hash } = req.body;
   db("stems")
     .returning("*")
@@ -11,8 +11,4 @@ const handleGetStemList = (req, res, db) => {
     .catch((err) => {
       res.status(400).json("List error");
     });
-};
-
-module.exports = {
-  handleGetStemList,
 };

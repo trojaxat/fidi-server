@@ -1,4 +1,4 @@
-const handleRegister = (req, res, db, bcrypt) => {
+export default function register(req, res, db, bcrypt) {
   const { email, username, password } = req.body;
   const myPlaintextPassword = req.body.password;
   const hash = bcrypt.hashSync(password);
@@ -26,7 +26,3 @@ const handleRegister = (req, res, db, bcrypt) => {
 //    const myPlaintextPassword = req.body.password;
 //    const saltRounds = bcrypt.genSaltSync(10);
 //    const hash = bcrypt.hashSync(password, saltRounds);
-
-module.exports = {
-  handleRegister,
-};

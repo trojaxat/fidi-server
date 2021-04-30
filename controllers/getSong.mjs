@@ -1,8 +1,8 @@
 // Handles the file downloading
-const downloader = require("../helpers/downloader");
+import downloader from "../helpers/downloader.mjs";
 
 // The order of the where query builder if statements is relevant for knex
-const handleGetSong = (req, res, db) => {
+export default function getSong(req, res, db) {
   const { email, hash, id, noFileReturn } = req.body;
 
   // The type of usersQueryBuilder is determined here
@@ -32,7 +32,7 @@ const handleGetSong = (req, res, db) => {
   if (noFileReturn !== true) {
     queryBuilder
       .then((audio) => {
-        return downloader.handleDownloadFilePath(filePath, audio[0], res);
+        return downloader(filePath, audio[0], res);
       })
       .catch((err) => {
         console.log("err :", err);
@@ -49,8 +49,4 @@ const handleGetSong = (req, res, db) => {
         return res.status(400).json("Song not in database");
       });
   }
-};
-
-module.exports = {
-  handleGetSong,
 };

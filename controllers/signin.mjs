@@ -1,4 +1,4 @@
-const handleSignIn = (req, res, db, bcrypt) => {
+export default function signIn(req, res, db, bcrypt) {
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -30,7 +30,3 @@ const handleSignIn = (req, res, db, bcrypt) => {
 //const saltRounds = bcrypt.genSaltSync(10);
 //const givenPassword = bcrypt.hashSync(req.body.password, saltRounds);
 //const isCorrect = bcrypt.compareSync(givenPassword, data[0].hash);
-
-module.exports = {
-  handleSignIn,
-};

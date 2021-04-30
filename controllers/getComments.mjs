@@ -1,4 +1,4 @@
-const handleGetComments = (req, res, db) => {
+export default function getComments(req, res, db) {
   const { link, id } = req.body;
   db("comments")
     .returning("comment")
@@ -12,8 +12,4 @@ const handleGetComments = (req, res, db) => {
       return res.json(link);
     })
     .catch((err) => res.status(400).json("Comments not found"));
-};
-
-module.exports = {
-  handleGetComments,
 };
