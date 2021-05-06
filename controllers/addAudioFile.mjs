@@ -4,10 +4,8 @@ import uploader from "../helpers/uploader.mjs";
 
 export default function addAudioFile(req, res) {
   let upload = req.files.myfile;
-  // let storage = storageDestination(req, res);
-  // let uploader = upload(storage);
-  let storagePath = storageDestination(upload);
-  console.log('storagePath :', storagePath);
+  let hash = req.body.hash;
+  let storagePath = storageDestination(upload, hash);
 
   if (!upload || !storagePath) {
     res.status(400);
