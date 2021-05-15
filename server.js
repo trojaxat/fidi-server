@@ -159,6 +159,7 @@ app.post("/searchTerm", (req, res) => {
 let db;
 if (process.env.PORT) {
   console.log("This is the host server");
+  console.log('process.env.DATABASE_URL :', process.env.DATABASE_URL);
   db = knex({
     client: 'pg',
     connection: {

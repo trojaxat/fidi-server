@@ -9,38 +9,26 @@ export default function signIn(req, res, db, bcrypt) {
     .from("users")
     .where("email", "=", req.body.email)
     .then((data) => {
-      console.log('data :', data);
-      return data;
+      const isCorrect = bcrypt.compareSync(req.body.password, data[0].hash);
+
+      if (isCorrect) {
+        return db
+          .select("*")
+          .from("users")
+          .where("email", "=", req.body.email)
+          .then((user) => {
+            res.send(user[0]);
+          })
+          .catch((err) => {
+            return res.status(400, res.json("No chance laddie"))
+          });
+      } else {
+        return res.status(400, res.json("Nae chance password"));
+      }
     })
     .catch((err) => {
-      console.log('err :', err);
-      return err;
+      return res.status(400, res.json("Nae chance user"))
     });
-
-  // db.select("email", "hash")
-  //   .from("users")
-  //   .where("email", "=", req.body.email)
-  //   .then((data) => {
-  //     const isCorrect = bcrypt.compareSync(req.body.password, data[0].hash);
-
-  //     if (isCorrect) {
-  //       return db
-  //         .select("*")
-  //         .from("users")
-  //         .where("email", "=", req.body.email)
-  //         .then((user) => {
-  //           res.send(user[0]);
-  //         })
-  //         .catch((err) => {
-  //           res.status(400, res.json("No chance laddie"))
-  //         });
-  //     } else {
-  //       return res.status(400, res.json("Nae chance password"));
-  //     }
-  //   })
-  //   .catch((err) => {
-  //     return res.status(400, res.json("Nae chance user"))
-  //   });
 };
 
 //const saltRounds = bcrypt.genSaltSync(10);
