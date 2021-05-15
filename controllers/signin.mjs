@@ -19,7 +19,9 @@ export default function signIn(req, res, db, bcrypt) {
           .then((user) => {
             res.send(user[0]);
           })
-          .catch((err) => res.status(400, res.json("No chance laddie")));
+          .catch((err) => {
+            return res.status(400, res.json("No chance laddie"))
+          });
       } else {
         return res.status(400, res.json("Nae chance password"));
       }
