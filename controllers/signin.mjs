@@ -5,7 +5,12 @@ export default function signIn(req, res, db, bcrypt) {
     return res.status(400).json("One of the fields is empty");
   }
   
-  return res.status(400, res.json("Nae chance password"));
+  db.select("email", "hash")
+    .from("users")
+    .where("email", "=", req.body.email)
+    .then((data) => {
+      return data;
+    });
 
   // db.select("email", "hash")
   //   .from("users")
@@ -22,7 +27,7 @@ export default function signIn(req, res, db, bcrypt) {
   //           res.send(user[0]);
   //         })
   //         .catch((err) => {
-  //           return res.status(400, res.json("No chance laddie"))
+  //           res.status(400, res.json("No chance laddie"))
   //         });
   //     } else {
   //       return res.status(400, res.json("Nae chance password"));
