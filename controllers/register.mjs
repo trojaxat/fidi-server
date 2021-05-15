@@ -24,10 +24,11 @@ export default function register(req, res, db, bcrypt) {
           res.send(user[0]);
         })
     })
-    .catch((err) => res.status(400).json("Unable to register"));
+    .catch((err) => {
+      return res.status(400).json("Unable to register")
+    });
 };
 
 // Need to add salt later
-//    const myPlaintextPassword = req.body.password;
-//    const saltRounds = bcrypt.genSaltSync(10);
-//    const hash = bcrypt.hashSync(password, saltRounds);
+// const saltRounds = bcrypt.genSaltSync(10);
+// const hash = bcrypt.hashSync(password, saltRounds);

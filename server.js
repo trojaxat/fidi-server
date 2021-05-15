@@ -158,8 +158,8 @@ app.post("/searchTerm", (req, res) => {
  */
 let db;
 if (process.env.PORT) {
+  // rejectUnauthorized was set to true, had to change it not sure if false is necessary anymore
   console.log("This is the host server");
-  console.log('process.env.DATABASE_URL :', process.env.DATABASE_URL);
   db = knex({
     client: 'pg',
     connection: {
