@@ -150,7 +150,7 @@ app.get("/", (req, res) => {
   return res.send("Heroku working");
 });
 app.post("/searchTerm", (req, res) => {
-  SearchTerm(req, res, db);
+  searchTerm(req, res, db);
 });
 
 /*

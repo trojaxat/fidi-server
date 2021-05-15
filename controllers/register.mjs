@@ -1,13 +1,12 @@
 export default function register(req, res, db, bcrypt) {
   const { email, username, password } = req.body;
-  const myPlaintextPassword = req.body.password;
   const hash = bcrypt.hashSync(password);
 
   if (!email || !username || !password) {
     return res.status(400).json("One of the fields is empty");
   }
 
-  db("users")
+    db("users")
     .insert({
       username: username,
       email: email,
@@ -17,7 +16,13 @@ export default function register(req, res, db, bcrypt) {
     })
     .returning("email")
     .then((response) => {
-      res.json(response[0]);
+      return db
+      .select("*")
+      .from("users")
+      .where("email", "=", req.body.email)
+      .then((user) => {
+        res.send(user[0]);
+      })
     })
     .catch((err) => res.status(400).json("Unable to register"));
 };
