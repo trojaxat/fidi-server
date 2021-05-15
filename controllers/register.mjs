@@ -17,12 +17,12 @@ export default function register(req, res, db, bcrypt) {
     .returning("email")
     .then((response) => {
       return db
-      .select("*")
-      .from("users")
-      .where("email", "=", req.body.email)
-      .then((user) => {
-        res.send(user[0]);
-      })
+        .select("*")
+        .from("users")
+        .where("email", "=", req.body.email)
+        .then((user) => {
+          res.send(user[0]);
+        })
     })
     .catch((err) => res.status(400).json("Unable to register"));
 };

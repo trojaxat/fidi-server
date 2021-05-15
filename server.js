@@ -160,7 +160,7 @@ let db;
 if (process.env.PORT) {
   console.log("This is the host server");
   db = knex({
-    client: "pg",
+    client: 'pg',
     connection: {
       connectionString: process.env.DATABASE_URL,
       ssl: { 
