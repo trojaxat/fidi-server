@@ -154,7 +154,7 @@ app.post("/searchTerm", (req, res) => {
 });
 
 /*
- * Database
+ * Database and Port settings
  */
 let db;
 if (process.env.PORT) {
@@ -165,6 +165,10 @@ if (process.env.PORT) {
       connectionString: process.env.DATABASE_URL,
       ssl: true,
     },
+  });
+
+  app.listen(process.env.PORT, () => {
+    console.log(`Server is listening to port ${process.env.PORT}`);
   });
 } else {
   //old mysql database from local host
@@ -179,16 +183,7 @@ if (process.env.PORT) {
       database: "fidi",
     },
   });
-}
 
-/*
- * Port settings
- */
-if (process.env.PORT) {
-  app.listen(process.env.PORT, () => {
-    console.log(`Server is listening to port ${process.env.PORT}`);
-  });
-} else {
   app.listen(3030, () => {
     console.log(`Server is listening to port ${3030}`);
   });
