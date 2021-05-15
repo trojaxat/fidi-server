@@ -9,9 +9,11 @@ export default function signIn(req, res, db, bcrypt) {
     .from("users")
     .where("email", "=", req.body.email)
     .then((data) => {
+      console.log('data :', data);
       return data;
     })
     .catch((err) => {
+      console.log('err :', err);
       return err;
     });
 
