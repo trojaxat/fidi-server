@@ -12,4 +12,9 @@ This is an old server which has been repurposed for various projects
 3. Then
 ``` npm install ```
 4. Then
-``` npm start ```
+``` npm run start:dev ```
+
+## Notes
+Current local database settings are for mysql, although the server runs on postgresql.
+This causes various issues, the local settings for connecting to the sql will be changed.
+Currently xamp is recommended for fast starting this, can be changed to pgAdmin.
