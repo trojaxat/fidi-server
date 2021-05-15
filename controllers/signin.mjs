@@ -10,6 +10,9 @@ export default function signIn(req, res, db, bcrypt) {
     .where("email", "=", req.body.email)
     .then((data) => {
       return data;
+    })
+    .catch((err) => {
+      return err;
     });
 
   // db.select("email", "hash")
