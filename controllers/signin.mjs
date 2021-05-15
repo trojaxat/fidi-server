@@ -21,10 +21,12 @@ export default function signIn(req, res, db, bcrypt) {
           })
           .catch((err) => res.status(400, res.json("No chance laddie")));
       } else {
-        res.status(400, res.json("Nae chance password"));
+        return res.status(400, res.json("Nae chance password"));
       }
     })
-    .catch((err) => res.status(400, res.json("Nae chance user")));
+    .catch((err) => {
+      return res.status(400, res.json("Nae chance user"))
+    });
 };
 
 //const saltRounds = bcrypt.genSaltSync(10);
