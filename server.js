@@ -185,7 +185,7 @@ if (process.env.PORT) {
  * Port settings
  */
 if (process.env.PORT) {
-  app.listen(process.env.PORT || 3030, () => {
+  app.listen(process.env.PORT, () => {
     console.log(`Server is listening to port ${process.env.PORT}`);
   });
 } else {
