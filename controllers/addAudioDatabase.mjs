@@ -21,6 +21,7 @@ export default function addAudioDatabase(req, res, db) {
       res.json(response[0]);
     })
     .catch((err) => {
+      console.log('err :', err);
       return res.status(400).json("Audio file information not added");
     });
 };
