@@ -1,4 +1,4 @@
-const handleAddPolitician = (req, res, db) => {
+export default function addPolitician(req, res, db) {
   const { name, age, job, info, party, link, lat, lng, contact, id } = req.body;
   if (!contact || !name || !id) {
     return res.status(400).json("One of the fields is empty");
@@ -21,8 +21,4 @@ const handleAddPolitician = (req, res, db) => {
       res.json(response);
     })
     .catch((err) => res.status(400).json("Unable to add politician"));
-};
-
-module.exports = {
-  handleAddPolitician,
 };

@@ -1,13 +1,16 @@
 {
   "name": "fidi-react-api",
   "version": "1.0.0",
-  "description": "Server for all my fun apps and more serious ones as well",
+  "type": "module",
   "engines": {
     "node": "14.16.1"
   },
-  "main": "index.js",
+  "description": "Server for all my fun apps and more serious ones as well",
+  "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "start:dev": "nodemon --watch",
     "kill": "taskkill -F -IM node.exe"
   },
   "author": "",
@@ -19,6 +22,7 @@
     "cors": "^2.8.5",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
+    "express-fileupload": "^1.2.1",
     "fs": "0.0.1-security",
     "http": "0.0.1-security",
     "knex": "^0.21.5",
@@ -26,7 +30,7 @@
     "multer": "^1.4.2",
     "mysql": "^2.18.1",
     "path": "^0.12.7",
-    "pg": "^7.18.2",
+    "pg": "^8.0.3",
     "postgresql": "0.0.1"
   },
   "devDependencies": {

@@ -1,4 +1,4 @@
-const handleAddComment = (req, res, db) => {
+export default function addComment(req, res, db) {
   const { email, comment, link, id } = req.body;
   db("comments")
     .returning("*")
@@ -14,8 +14,4 @@ const handleAddComment = (req, res, db) => {
       return res.json(link[0]);
     })
     .catch((err) => res.status(400).json("Photo not added"));
-};
-
-module.exports = {
-  handleAddComment,
 };

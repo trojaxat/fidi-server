@@ -1,4 +1,4 @@
-const handleUpdateStem = (req, res, db) => {
+export default function updateStem(req, res, db) {
   let queryBuilder = db("audio_files").returning("*");
 
   if (req.body.hash) {
@@ -28,8 +28,4 @@ const handleUpdateStem = (req, res, db) => {
     .catch((err) => {
       return res.status(400).json("Stem not changed");
     });
-};
-
-module.exports = {
-  handleUpdateStem,
 };

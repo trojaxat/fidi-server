@@ -1,4 +1,4 @@
-const handleLoadUserIcons = (req, res, db) => {
+export default function loadUserIcons(req, res, db) {
   // need to change this for security reasons
   // change limit 10 to extend the amount of previous photos visible
   const { email } = req.body;
@@ -13,6 +13,3 @@ const handleLoadUserIcons = (req, res, db) => {
     .catch((err) => res.status(400).json("Photos not received from database"));
 };
 
-module.exports = {
-  handleLoadUserIcons,
-};

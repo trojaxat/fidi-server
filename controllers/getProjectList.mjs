@@ -1,4 +1,4 @@
-const handleGetProjectList = (req, res, db) => {
+export default function getProjectList(req, res, db) {
   const { email } = req.body;
   let queryBuilder = db("audio_files").returning("*");
 
@@ -22,6 +22,3 @@ const handleGetProjectList = (req, res, db) => {
     });
 };
 
-module.exports = {
-  handleGetProjectList,
-};

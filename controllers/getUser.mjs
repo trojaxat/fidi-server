@@ -1,4 +1,4 @@
-const handleGetUser = (req, res, db) => {
+export default function getUser(req, res, db) {
   const { user } = req.body;
   db("users")
     .select("email", "username")
@@ -8,8 +8,4 @@ const handleGetUser = (req, res, db) => {
     .then((response) => {
       res.send(response[0]);
     });
-};
-
-module.exports = {
-  handleGetUser,
 };

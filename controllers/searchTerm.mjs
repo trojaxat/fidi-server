@@ -1,4 +1,4 @@
-const handleSearchTerm = (req, res, db) => {
+export default function searchTerm(req, res, db) {
   const { searchTerm } = req.body;
   db("politicians")
     .returning("name")
@@ -11,6 +11,3 @@ const handleSearchTerm = (req, res, db) => {
     .catch((err) => res.status(400).json("Politicians not found"));
 };
 
-module.exports = {
-  handleSearchTerm,
-};

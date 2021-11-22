@@ -1,4 +1,4 @@
-const handleDeleteImage = (req, res, db) => {
+export default function deleteImage(req, res, db) {
   const { email, link } = req.body;
   db("photos")
     .where({
@@ -10,8 +10,4 @@ const handleDeleteImage = (req, res, db) => {
       return res.json(link[0]);
     })
     .catch((err) => res.status(400).json("Photo deleted"));
-};
-
-module.exports = {
-  handleDeleteImage,
 };

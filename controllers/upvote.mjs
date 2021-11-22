@@ -1,4 +1,4 @@
-const handleUpvote = (req, res, db) => {
+export default function upvote(req, res, db) {
   const { link, id, score } = req.body;
   db("comments")
     .returning("*")
@@ -8,8 +8,4 @@ const handleUpvote = (req, res, db) => {
       return res.json(link[0]);
     })
     .catch((err) => res.status(400).json("Photo not added"));
-};
-
-module.exports = {
-  handleUpvote,
 };
