@@ -7,8 +7,9 @@ const handleGetProjectList = (req, res, db) => {
       email: email,
     });
   } else {
+    // private has to be 0 for postgresql not for mysql
     queryBuilder.where({
-      private: false,
+      private: 0,
     });
   }
 
