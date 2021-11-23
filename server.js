@@ -8,11 +8,13 @@ import knex from "knex"; // connects to database like node.js
 import ejs from "ejs"; // embed JavaScript templates
 import fileUpload from "express-fileupload";
 import __dirname from "./helpers/dir.mjs";
+import dotenv from "dotenv";
 
 /*
  * Initialise App
  */
 const app = express();
+const result = dotenv.config();
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -179,7 +181,7 @@ if (process.env.PORT) {
   db = knex({
     client: "pg",
     connection: {
-      connectionString: DEV_DATABASE_URL,
+      connectionString: process.env.DEV_DATABASE_URL,
       ssl: {
         sslmode: "require",
         rejectUnauthorized: false,
