@@ -9,8 +9,8 @@ export default function addImage(req, res, db) {
       place: place,
       id: id,
     })
-    .then((link) => {
-      return res.json(link[0]);
+    .then((linkResponse) => {
+      return res.json(linkResponse[0]);
     })
     .catch((err) => res.status(400).json("Photo not added"));
-};
+}

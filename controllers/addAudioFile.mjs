@@ -19,4 +19,4 @@ export default function addAudioFile(req, res) {
   }
 
   uploader(res, upload, storagePath);
-};
+}

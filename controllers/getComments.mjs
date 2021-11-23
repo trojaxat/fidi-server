@@ -8,8 +8,8 @@ export default function getComments(req, res, db) {
     .andWhere({
       link: link,
     })
-    .then((link) => {
-      return res.json(link);
+    .then((linkResponse) => {
+      return res.json(linkResponse);
     })
     .catch((err) => res.status(400).json("Comments not found"));
-};
+}

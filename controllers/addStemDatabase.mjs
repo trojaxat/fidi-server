@@ -29,4 +29,4 @@ export default function addStemDatabase(req, res, db) {
       res.json(response[0]);
     })
     .catch((err) => res.status(400).json("Stem file information not added"));
-};
+}

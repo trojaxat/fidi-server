@@ -15,6 +15,14 @@ import dotenv from "dotenv";
  */
 const app = express();
 const result = dotenv.config();
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "http://localhost");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -181,11 +189,12 @@ if (process.env.PORT) {
   db = knex({
     client: "pg",
     connection: {
-      connectionString: process.env.DEV_DATABASE_URL,
-      ssl: {
-        sslmode: "require",
-        rejectUnauthorized: false,
-      },
+      host: "localhost",
+      port: 5432,
+      database: process.env.DB_NAME,
+      user: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      url: process.env.DATABASE_URL,
     },
   });
 

@@ -20,5 +20,5 @@ export default function getProjectList(req, res, db) {
     .catch((err) => {
       return res.status(400).json("List error");
     });
-};
+}
 

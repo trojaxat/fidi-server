@@ -1,5 +1,7 @@
 export default function addAudioDatabase(req, res, db) {
-  const { email, name, hash, privateValue, lastModified } = req.body;
+  const { email, name, hash, privateValue } = req.body;
+  let lastModified = req.body.lastModified;
+
   if (!name || !hash) {
     return res.status(400).json("One of the fields is empty");
   }
@@ -21,7 +23,7 @@ export default function addAudioDatabase(req, res, db) {
       res.json(response[0]);
     })
     .catch((err) => {
-      console.log('err :', err);
+      console.log("err :", err);
       return res.status(400).json("Audio file information not added");
     });
-};
+}

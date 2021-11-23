@@ -6,8 +6,8 @@ export default function deleteImage(req, res, db) {
       link: link,
     })
     .del()
-    .then((link) => {
-      return res.json(link[0]);
+    .then((linkResponse) => {
+      return res.json(linkResponse[0]);
     })
     .catch((err) => res.status(400).json("Photo deleted"));
-};
+}

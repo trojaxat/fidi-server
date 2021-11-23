@@ -49,4 +49,4 @@ export default function getSong(req, res, db) {
         return res.status(400).json("Song not in database");
       });
   }
-};
+}
