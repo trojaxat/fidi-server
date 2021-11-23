@@ -1,5 +1,5 @@
 export default function addAudioDatabase(req, res, db) {
-  const { email, name, hash, privateValue } = req.body;
+  const { email, name, hash, private } = req.body;
   let lastModified = req.body.lastModified;
 
   if (!name || !hash) {
@@ -14,7 +14,7 @@ export default function addAudioDatabase(req, res, db) {
     .insert({
       hash: hash,
       name: name,
-      private: privateValue,
+      private: private,
       email: email,
       last_modified: lastModified,
     })
@@ -23,7 +23,6 @@ export default function addAudioDatabase(req, res, db) {
       res.json(response[0]);
     })
     .catch((err) => {
-      console.log("err :", err);
       return res.status(400).json("Audio file information not added");
     });
 }

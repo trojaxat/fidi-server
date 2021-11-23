@@ -35,7 +35,6 @@ export default function getSong(req, res, db) {
         return downloader(filePath, audio[0], res);
       })
       .catch((err) => {
-        console.log("err :", err);
         return res.status(400).json("Song error");
       });
   } else {
@@ -45,7 +44,6 @@ export default function getSong(req, res, db) {
         return;
       })
       .catch((err) => {
-        console.log("err :", err);
         return res.status(400).json("Song not in database");
       });
   }
