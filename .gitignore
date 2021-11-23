@@ -5,3 +5,4 @@ node_modules
 .vscode/launch.json
 sendGrid.js
 testEmail.js
+.env

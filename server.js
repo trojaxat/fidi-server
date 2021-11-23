@@ -6,15 +6,15 @@ import express from "express"; // web application framework for node.js
 import bcrypt from "bcryptjs"; // encryption to hash passwords
 import knex from "knex"; // connects to database like node.js
 import ejs from "ejs"; // embed JavaScript templates
-import fileUpload from 'express-fileupload';
-import __dirname from './helpers/dir.mjs';
+import fileUpload from "express-fileupload";
+import __dirname from "./helpers/dir.mjs";
 
 /*
  * Initialise App
  */
 const app = express();
 app.set("view engine", "ejs");
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors());
 app.use(fileUpload());
@@ -24,40 +24,40 @@ app.use(express.static(__dirname + "/public/uploads/"));
  * Controllers
  */
 // Login
-import register from  "./controllers/register.mjs";
-import signIn from  "./controllers/signin.mjs";
+import register from "./controllers/register.mjs";
+import signIn from "./controllers/signin.mjs";
 
 // Get from database
-import getSong from  "./controllers/getSong.mjs";
-import getUser from  "./controllers/getUser.mjs";
-import getImage from  "./controllers/getImage.mjs";
-import getComments from  "./controllers/getComments.mjs";
-import getProjectList from  "./controllers/getProjectList.mjs";
-import getStemList from  "./controllers/getStemList.mjs";
-import getImageByLink from  "./controllers/getImageByLink.mjs";
+import getSong from "./controllers/getSong.mjs";
+import getUser from "./controllers/getUser.mjs";
+import getImage from "./controllers/getImage.mjs";
+import getComments from "./controllers/getComments.mjs";
+import getProjectList from "./controllers/getProjectList.mjs";
+import getStemList from "./controllers/getStemList.mjs";
+import getImageByLink from "./controllers/getImageByLink.mjs";
 
 // Load media
-import playMediaServer from  "./controllers/playMediaServer.mjs";
-import loadUserIcons from  "./controllers/loadUserIcons.mjs";
+import playMediaServer from "./controllers/playMediaServer.mjs";
+import loadUserIcons from "./controllers/loadUserIcons.mjs";
 
 // Modify
-import updateImage from  "./controllers/updateImage.mjs";
-import updateProject from  "./controllers/updateProject.mjs";
-import updateStem from  "./controllers/updateStem.mjs";
-import deleteImage from  "./controllers/deleteImage.mjs";
-import upvote from  "./controllers/upvote.mjs";
+import updateImage from "./controllers/updateImage.mjs";
+import updateProject from "./controllers/updateProject.mjs";
+import updateStem from "./controllers/updateStem.mjs";
+import deleteImage from "./controllers/deleteImage.mjs";
+import upvote from "./controllers/upvote.mjs";
 
 // Add to database
-import addAudioDatabase from  "./controllers/addAudioDatabase.mjs";
-import addStemDatabase from  "./controllers/addStemDatabase.mjs";
-import addAudioFile from  "./controllers/addAudioFile.mjs";
-import addImage from  "./controllers/addImage.mjs";
-import addSubscription from  "./controllers/addSubscription.mjs";
-import addPolitician from  "./controllers/addPolitician.mjs";
-import addComment from  "./controllers/addComment.mjs";
+import addAudioDatabase from "./controllers/addAudioDatabase.mjs";
+import addStemDatabase from "./controllers/addStemDatabase.mjs";
+import addAudioFile from "./controllers/addAudioFile.mjs";
+import addImage from "./controllers/addImage.mjs";
+import addSubscription from "./controllers/addSubscription.mjs";
+import addPolitician from "./controllers/addPolitician.mjs";
+import addComment from "./controllers/addComment.mjs";
 
 // Query database
-import searchTerm from  "./controllers/searchTerm.mjs";
+import searchTerm from "./controllers/searchTerm.mjs";
 
 /*
  * Routes
@@ -142,7 +142,7 @@ app.post("/addComment", (req, res) => {
   addComment(req, res, db);
 });
 app.post("/addPolitician", (req, res) => {
-  addPolitician(req, res, db);  
+  addPolitician(req, res, db);
 });
 
 // Query database
@@ -161,29 +161,29 @@ if (process.env.PORT) {
   // rejectUnauthorized was set to true, had to change it not sure if false is necessary anymore
   console.log("This is the host server");
   db = knex({
-    client: 'pg',
+    client: "pg",
     connection: {
       connectionString: process.env.DATABASE_URL,
-      ssl: { 
-        sslmode: 'require',
-        rejectUnauthorized: false }
+      ssl: {
+        sslmode: "require",
+        rejectUnauthorized: false,
+      },
     },
   });
-
   app.listen(process.env.PORT, () => {
     console.log(`Server is listening to port ${process.env.PORT}`);
   });
 } else {
-  //old mysql database from local host
+  //database from local host
   console.log("This is the local server");
   db = knex({
-    client: "mysql",
-    version: "6.4",
+    client: "pg",
     connection: {
-      host: "127.0.0.1",
-      user: "root",
-      password: "",
-      database: "fidi",
+      connectionString: DEV_DATABASE_URL,
+      ssl: {
+        sslmode: "require",
+        rejectUnauthorized: false,
+      },
     },
   });
 
