@@ -1,20 +1,18 @@
 export default function addAudioDatabase(req, res, db) {
-  const { email, name, hash, private } = req.body;
-  let lastModified = req.body.lastModified;
-
-  if (!name || !hash) {
+  const { email, name, privateValue } = req.body;
+  
+  if (!name) {
     return res.status(400).json("One of the fields is empty");
   }
 
-  if (!lastModified) {
-    lastModified = Date.now();
-  }
+  let lastModified = Date.now();
+  let hash = md5(emailSub + name + lastModified);
 
   db("audio_files")
     .insert({
       hash: hash,
       name: name,
-      private: private,
+      privateValue: privateValue,
       email: email,
       last_modified: lastModified,
     })

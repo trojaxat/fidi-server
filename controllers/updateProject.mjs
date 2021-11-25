@@ -6,9 +6,9 @@ export default function updateProject(req, res, db) {
       hash: req.body.hash,
     });
 
-    if (req.body.private) {
+    if (req.body.privateValue) {
       queryBuilder.update({
-        private: req.body.private,
+        privateValue: req.body.privateValue,
       });
     }
 

@@ -22,7 +22,7 @@ export default function addStemDatabase(req, res, db) {
       filetype: filetype,
       locked: locked,
       downloadable: downloadable,
-      private: privateValue,
+      privateValue: privateValue,
     })
     .returning("*")
     .then((response) => {

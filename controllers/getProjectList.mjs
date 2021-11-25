@@ -9,7 +9,7 @@ export default function getProjectList(req, res, db) {
   } else {
     // private has to be 0 for postgresql not for mysql
     queryBuilder.where({
-      private: 0,
+      privateValue: 0,
     });
   }
 

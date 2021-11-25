@@ -46,6 +46,9 @@ import getProjectList from "./controllers/getProjectList.mjs";
 import getStemList from "./controllers/getStemList.mjs";
 import getImageByLink from "./controllers/getImageByLink.mjs";
 
+// Aws
+import getUploadUrl from "./controllers/getUploadUrl.mjs";
+
 // Load media
 import playMediaServer from "./controllers/playMediaServer.mjs";
 import loadUserIcons from "./controllers/loadUserIcons.mjs";
@@ -114,6 +117,11 @@ app.get("/project/:id", (req, res) => {
 app.post("/loadUserIcons", (req, res) => {
   loadUserIcons(req, res, db);
 });
+
+// Aws 
+app.get("/getUploadUrl", (req, res) => {
+  getUploadUrl(req, res);
+})
 
 // Modify
 app.post("/updateImage", (req, res) => {

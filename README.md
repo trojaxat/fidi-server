@@ -16,8 +16,9 @@ This is an old server which has been repurposed for various projects
 
 ## Notes
 Server sided runs npm start automatically.
-
 Note, local database settings are for mysql, although the server runs on postgresql.
 
 Local: Install xamp then run Apache and MySql
+Runs: localhost:3030
 Public: PgAdmin
+Runs: XXXXX:3030
