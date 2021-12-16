@@ -1,3 +1,5 @@
+import md5 from "md5";
+
 export default function addAudioDatabase(req, res, db) {
   const { email, name, privateValue } = req.body;
   
@@ -6,13 +8,13 @@ export default function addAudioDatabase(req, res, db) {
   }
 
   let lastModified = Date.now();
-  let hash = md5(emailSub + name + lastModified);
+  let hash = md5(email + name);
 
   db("audio_files")
     .insert({
       hash: hash,
       name: name,
-      privateValue: privateValue,
+      privateValue: privateValue ? 1 : 0,
       email: email,
       last_modified: lastModified,
     })

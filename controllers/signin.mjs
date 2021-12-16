@@ -5,31 +5,26 @@ export default function signIn(req, res, db, bcrypt) {
     return res.status(400).json("One of the fields is empty");
   }
 
-  db.select("email", "hash")
-    .from("users")
+  db("users")
+    .returning("*")
     .where("email", "=", req.body.email)
+    .select("*")
     .then((data) => {
-      const isCorrect = bcrypt.compareSync(req.body.password, data[0].hash);
+      if(Array.isArray(data) && data.length == 0) {
+        return res.status(400).json("There is no user");
+      }
 
+      const isCorrect = bcrypt.compareSync(req.body.password, data[0].hash);
       if (isCorrect) {
-        return db
-          .select("*")
-          .from("users")
-          .where("email", "=", req.body.email)
-          .then((user) => {
-            res.send(user[0]);
-          })
-          .catch((err) => {
-            return res.status(400).json("No chance laddie");
-          });
+        return res.send(data[0]);
       } else {
-        return res.status(400).json("Nae chance password");
+        return res.status(400).json("Password is incorrect");
       }
     })
     .catch((err) => {
       return res.status(400).json({
-        error: JSON.stringify(err),
-        message: "Nae chance user",
+        error: err,
+        message: "Server Error",
       });
     });
 }
